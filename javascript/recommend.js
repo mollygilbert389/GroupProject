@@ -4,47 +4,75 @@
 //movie database link: https://developers.themoviedb.org/3/movies/get-movie-details
 
 var favmovies = [];
-var imdbIDs = [];
+var imdbIDs = ["tt0172495","tt0095016","tt1431045","tt0112573","tt0371746","tt4481414"];
 var tmdbIDs = [];
 var recomObj = {};
 var ratedObj = {};
 var recommendArray= [];
 var recommendations = [];
+var test = [];
+var recoObj = {};
 
 var getTMDBids = function(array) {
     var idArray = [];
-    for (var id = 0; i < array.length; i++)
-    
-        var IDurl = "https://api.themoviedb.org/3/find/" + id + "?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&external_source=imdb_id"
-        var tmdbID = "";
+    var promises = array.map( (id) => {
+        return new Promise(function(res) {
+            
+            var IDurl = "https://api.themoviedb.org/3/find/" + String(id) + "?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&external_source=imdb_id"
+            var tmdbID = "";
 
-        $.ajax({
-            url: IDurl,
-            method: "GET"
-        }).then(function(data) {
-            tmdbID = data.val().movieresults[0].id;
-            idArray.append(tmdbID);
-            return idArray;
-        });
+            $.ajax({
+                url: IDurl,
+                method: "GET"
+            }).done(function(data) {
+                tmdbID = data.movie_results[0].id;
+                idArray.push(String(tmdbID));
+                res(tmdbID)
+            })
+        })
+    })
+
+    Promise.all(promises).then(function(alldata) {
+        console.log(alldata)
+        getRecom(alldata);
+    })
+
 }
 
 var getRecom = function(array) {
-    var recoObj = {};
-    for (var id = 0; i < array.length; i++) {
-        var recurl = "https://api.themoviedb.org/3/movie/" + id +"/recommendations?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&page=1"
-        var recommends = [];
-        $.ajax({
-            url: myurl,
-            method: "GET"
-        }).then(function(data) {
-            for (var i = 0; i < data.val().results.length; i++) {
-               var tempid = data.val().results[i].id
-                recommends.append(tempid)
-            }            
-            recoObj[id] = recommends;
-        });
-    } 
-    return recoObj;
+    console.log(array)
+    var promises = array.map( (id) => {
+        return new Promise(function(res) {
+
+            var recurl = "https://api.themoviedb.org/3/movie/" + String(id)  +"/recommendations?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&page=1"
+            var recommends = [];
+    
+            $.ajax({
+                url: recurl,
+                method: "GET"
+            }).then(function(data) {
+                
+                for (var i = 0; i < data.results.length; i++) {
+                    var tempid = data.results[i].id
+                    recommends.push(tempid)
+                }        
+                recomObj[id] = recommends;
+                console.log(recommends)
+
+
+                res(recomObj)
+                
+            });
+
+
+        })
+    })
+
+    Promise.all(promises).then(function(alldata) {
+        console.log(alldata);
+        console.log(recomObj)
+    })
+
 }
 
 var sortObj = function(myobject) {
@@ -58,15 +86,14 @@ var sortObj = function(myobject) {
                 ratedMovies.append(movie);
                 ratedObj[movie] = rating;
             }
-            
         }
     }
 }
 
 var getIMDBids = function(array) {
     
-    for (var id = 0; i < array.length; i++) {
-        var idurl = "https://api.themoviedb.org/3/movie/" + id + " ?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US"
+    for (var id = 0; id < array.length; id++) {
+        var idurl = "https://api.themoviedb.org/3/movie/" + array[id] + " ?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US"
         var imdbID = "";
         var recommends = [];
         $.ajax({
@@ -106,8 +133,16 @@ var sortRatings = function(myobject) {
     return sortable;
 }
 
+
+console.log(imdbIDs)
 tmdbIDs = getTMDBids(imdbIDs);
-recomObj = getRecom(tmdbIDs);
-sortObj(recomObj);
-recommendArray = sortRatings(ratedObj)
-recommendations = getIMDBids(recommendArray);
+
+//console.log(recomObj)
+// sortObj(recomObj);
+// console.log(ratedObj)
+// recommendArray = sortRatings(ratedObj)
+// console.log(recommendArray)
+// recommendations = getIMDBids(recommendArray);
+// console.log(recommendations);
+
+
