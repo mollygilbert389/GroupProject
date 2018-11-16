@@ -87,6 +87,26 @@
 
 </body>
 
-<script src="assets/js/app.js"></script>
+<script src="assets/js/recommend.js"></script>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDwKzfB-DM1BrllQTwCe4MmY5gWEi3tD7o",
+    authDomain: "reelmatchut.firebaseapp.com",
+    databaseURL: "https://reelmatchut.firebaseio.com",
+    projectId: "reelmatchut",
+    storageBucket: "reelmatchut.appspot.com",
+    messagingSenderId: "539462332267"
+  };
+  firebase.initializeApp(config);
+
+  
+    // Create a variable to reference the database
+    var database = firebase.database();
+    
+</script>
 
 </html>
