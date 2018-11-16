@@ -7,6 +7,8 @@ var favmovies = [];
 var imdbIDs = [];
 var tmdbIDs = [];
 var recomObj = {};
+var ratedObj = {};
+var recommendArray= [];
 var recommendations = [];
 
 var getTMDBids = function(array) {
@@ -46,7 +48,19 @@ var getRecom = function(array) {
 }
 
 var sortObj = function(myobject) {
-    
+    objKeys = Object.keys(myobject);
+    for (var i = 0; i < objKeys.length; i++) {
+        for (var j = 0; j < myobject[objKeys[i]].length; j++) {
+            var movie = myobject[objKeys[i]][j];
+            
+            if (ratedMovies.indexOf(movie) < 0) {
+                var rating = getRated(myobject,movie);
+                ratedMovies.append(movie);
+                ratedObj[movie] = rating;
+            }
+            
+        }
+    }
 }
 
 var getIMDBids = function(array) {
@@ -60,11 +74,40 @@ var getIMDBids = function(array) {
             method: "GET"
         }).then(function(data) {
             imdbid = data.val().imdb_id;
-            
+            recommends.push(imdbid);
         });
-    }    
+    }
+    return recommends;
+}
+
+var getRated = function(movieObj, movie) {
+    objKeys = Object.keys(movieObj);
+    rating = 0;
+    for (var i = 0; i < objKeys.length; i++) {
+        if (movieObj[objKeys[i]].indexOf(movie) >= 0) {
+            rating++
+        }
+    }
+    return rating;
+}
+
+var sortRatings = function(myobject) {
+    var sortable = [];
+    for (var id in myobject) {
+        sortable.push([id, myobject[id]]);
+    }
+    sortable.sort(function(a, b) {
+        return a[1] - b[1];
+    })
+
+    for (var i = sortable.length-1; i>=0;i--){
+        recommendation.push(sortable[i][0])
+    }
+    return sortable;
 }
 
 tmdbIDs = getTMDBids(imdbIDs);
 recomObj = getRecom(tmdbIDs);
-recommendations = sortObj(recomObj);
+sortObj(recomObj);
+recommendArray = sortRatings(ratedObj)
+recommendations = getIMDBids(recommendArray);
