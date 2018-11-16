@@ -115,7 +115,7 @@ var getIMDBids = function(array) {
     })
     Promise.all(promises).then(function(alldata) {
         recommendations = alldata;
-        console.log(recommendations);
+        //console.log(recommendations);
     })
 }
 
@@ -123,12 +123,14 @@ var getIMDBids = function(array) {
 
 
 var promise2 = new Promise(function(res) { 
-    Promise.resolve(getRecommendations(favmovies));
-    res()
+    getRecommendations(favmovies)
+    setTimeout(function(){
+        res();
+
+    }, 500)
 })
 
 promise2.then(function(val) {
     console.log(recommendations);
-    console.log(recommendArray)
 })
 
