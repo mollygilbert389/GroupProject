@@ -150,7 +150,7 @@ var getResults = function(array) {
 }
 
 var getMoreResults = function() {
-    if (more <= 40) {
+    if (more <= recommendations.length-9) {
         var array = recommendations;
         for (var i = more; i < more+10; i++) {
             var moiveid = array[i]
