@@ -1,25 +1,26 @@
-.nav{
-    height: 100px;
+.card{
+margin:10px;
+width: 100%;
+text-align: center;
+}
+p{
+    margin-bottom:0px;
+}
+.pic{
+height:200px;
+}
+.text{
+    height: 100%;
+    display: inline-block;
+    width: 65%;
+}
+.poster{
+    height: 100%;
+    text-align: center;
+    float: left;
+    width:15%;
 }
 
-.logo{
-
-
-}
-.menu{
- margin-top: 10px;
- margin-bottom: 10px;   
-
-}
-.list-container {
-    margin-top: 10px;
-    margin-bottom: 10px;   
-}
-
-.my-list-container{
-    margin-top: 10px;
-    margin-bottom: 10px;   
-}
 
 .recommendations-container{
     margin-top: 10px;
@@ -37,5 +38,6 @@
     margin-bottom: 10px;
    
 }
+
 
 
