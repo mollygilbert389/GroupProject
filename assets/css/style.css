@@ -20,3 +20,24 @@ height:200px;
     float: left;
     width:15%;
 }
+
+
+.recommendations-container{
+    margin-top: 10px;
+    margin-bottom: 10px;   
+}
+
+.where-container{
+    margin-top: 10px;
+    margin-bottom: 10px;   
+}
+
+.search-container {
+    width: 400px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+   
+}
+
+
+
