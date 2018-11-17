@@ -1,0 +1,39 @@
+.nav{
+    height: 100px;
+}
+
+.logo{
+
+
+}
+.menu{
+ margin-top: 10px;
+ margin-bottom: 10px;   
+
+}
+.list-container {
+    margin-top: 10px;
+    margin-bottom: 10px;   
+}
+
+.my-list-container{
+    margin-top: 10px;
+    margin-bottom: 10px;   
+}
+
+.recommendations-container{
+    margin-top: 10px;
+    margin-bottom: 10px;   
+}
+
+.where-container{
+    margin-top: 10px;
+    margin-bottom: 10px;   
+}
+
+.search-container {
+    width: 400px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+   
+}
