@@ -1,39 +1,22 @@
-.nav{
-    height: 100px;
+.card{
+margin:10px;
+width: 100%;
+text-align: center;
 }
-
-.logo{
-
-
+p{
+    margin-bottom:0px;
 }
-.menu{
- margin-top: 10px;
- margin-bottom: 10px;   
-
+.pic{
+height:200px;
 }
-.list-container {
-    margin-top: 10px;
-    margin-bottom: 10px;   
+.text{
+    height: 100%;
+    display: inline-block;
+    width: 65%;
 }
-
-.my-list-container{
-    margin-top: 10px;
-    margin-bottom: 10px;   
-}
-
-.recommendations-container{
-    margin-top: 10px;
-    margin-bottom: 10px;   
-}
-
-.where-container{
-    margin-top: 10px;
-    margin-bottom: 10px;   
-}
-
-.search-container {
-    width: 400px;
-    margin: 0 auto;
-    margin-bottom: 10px;
-   
+.poster{
+    height: 100%;
+    text-align: center;
+    float: left;
+    width:15%;
 }
