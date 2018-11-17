@@ -1,5 +1,5 @@
 
-var arr=[];
+var favMovies=[];
 
 $("#submit").on("click", function(){
 
