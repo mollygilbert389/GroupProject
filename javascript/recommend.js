@@ -4,16 +4,21 @@
 //movie database link: https://developers.themoviedb.org/3/movies/get-movie-details
 
 var favmovies = ["tt0172495","tt0095016","tt1431045","tt0112573","tt0371746","tt4481414"];
+// Gladitator, Die Hard, Deadpool, Braveheart, Iron Man, Gifted
+var favtmdb = [];
 var recomObj = {};
 var ratedObj = {};
 var recommendArray= [];
 var recommendations = [];
+var tmdb_key = "c5e11b07aed33fed93509604abbe325f";
+var omdb_key = "900ac6b6"
+var more = 10;
 
 var getRecommendations = async function(array) {
     var idArray = [];
     var promises = array.map( (id) => {
         return new Promise(function(res) {
-            var IDurl = "https://api.themoviedb.org/3/find/" + String(id) + "?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&external_source=imdb_id"
+            var IDurl = "https://api.themoviedb.org/3/find/" + String(id) + "?api_key="+tmdb_key+"&language=en-US&external_source=imdb_id"
             var tmdbID = "";
             $.ajax({
                 url: IDurl,
@@ -26,6 +31,7 @@ var getRecommendations = async function(array) {
         })
     })
     Promise.all(promises).then(function(alldata) {
+        favtmdb = alldata;
         getRecom(alldata);
     })
 }
@@ -33,7 +39,7 @@ var getRecommendations = async function(array) {
 var getRecom = function(array) {
     var promises = array.map( (id) => {
         return new Promise(function(res) {
-            var recurl = "https://api.themoviedb.org/3/movie/" + String(id)  +"/recommendations?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&page=1"
+            var recurl = "https://api.themoviedb.org/3/movie/" + String(id)  +"/recommendations?api_key="+tmdb_key+"&language=en-US&page=1"
             var recommends = [];
             $.ajax({
                 url: recurl,
@@ -61,7 +67,7 @@ var sortObj = function(myobject) {
         for (var j = 0; j < myobject[objKeys[i]].length; j++) {
             var movie = myobject[objKeys[i]][j];
             
-            if (ratedMovies.indexOf(movie) < 0) {
+            if (ratedMovies.indexOf(movie) < 0 && favtmdb.indexOf(movie) < 0 ) {
                 var rating = getRated(myobject,movie);
                 ratedMovies.push(movie);
                 ratedObj[movie] = rating;
@@ -101,7 +107,7 @@ var getIMDBids = function(array) {
     var recommends = [];
     var promises = array.map((id) => {
         return new Promise(function(res) { 
-            var idurl = "https://api.themoviedb.org/3/movie/" + id + " ?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US"
+            var idurl = "https://api.themoviedb.org/3/movie/" + id + " ?api_key="+tmdb_key+"&language=en-US"
             var imdbID = "";
             $.ajax({
                 url: idurl,
@@ -115,22 +121,62 @@ var getIMDBids = function(array) {
     })
     Promise.all(promises).then(function(alldata) {
         recommendations = alldata;
-        //console.log(recommendations);
+        getResults(recommendations)
     })
+}
+
+var getResults = function(array) {
+    for (var i = 0; i < 10; i++) {
+        var moiveid = array[i]
+        var movieurl = "http://www.omdbapi.com/?i=" + moiveid + "&y=&plot=short&apikey="+omdb_key
+        more = 10;
+        $.ajax({
+            url: movieurl,
+            method: "GET"
+        }).then(function(data) {
+           var title = data.Title;
+           var plot = data.Plot;
+           var rating = data.Rated;
+           var genre = data.Genre;
+           var director = data.Director;         
+           console.log(title)
+           console.log(rating)
+           console.log(plot)
+           console.log(director)
+           console.log(genre)
+           console.log("-------------------")
+        });
+    }
+}
+
+var getMoreResults = function() {
+    if (more <= 40) {
+        var array = recommendations;
+        for (var i = more; i < more+10; i++) {
+            var moiveid = array[i]
+            var movieurl = "http://www.omdbapi.com/?i=" + moiveid + "&y=&plot=short&apikey="+omdb_key
+            
+            $.ajax({
+                url: movieurl,
+                method: "GET"
+            }).then(function(data) {
+               var title = data.Title;
+               var plot = data.Plot;
+               var rating = data.Rated;
+               var genre = data.Genre;
+               var director = data.Director;         
+               console.log(title)
+               console.log(rating)
+               console.log(plot)
+               console.log(director)
+               console.log(genre)
+               console.log("-------------------")
+            });
+        }
+        more += 10;    
+    }
 }
 
 
 
-
-var promise2 = new Promise(function(res) { 
-    getRecommendations(favmovies)
-    setTimeout(function(){
-        res();
-
-    }, 500)
-})
-
-promise2.then(function(val) {
-    console.log(recommendations);
-})
-
+getRecommendations(favmovies)
