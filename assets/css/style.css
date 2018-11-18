@@ -40,4 +40,95 @@ height:200px;
 }
 
 
+#seachbtns, #seachbtns-bottom {
+    display: none;
+}
+
+#recombtns {
+    display:show;
+}
+
+#movieSection, #recommendSection {
+    margin-top: 10px;
+}
+
+.RecomCont {
+    height: 300px;
+    border: 5px solid black;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.FavCont {
+    height: 100px;
+    border: 5px solid black;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.RIMG, .resultTxt {
+    display: inline-block;
+    height: 100%;
+}
+
+.RIMG {
+    float: left;
+}
+
+.resultTxt {
+    width: 60%;
+    text-align: Left;
+    float:left;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.recomImg{
+    height: 100%;
+}
+
+.resultTxt p {
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.buttons {
+    width: 15%;
+    height: 100%;
+    float: right;
+}
+.rt-link{
+    height: 40px;
+    width: 145px;
+    margin: 20px auto;
+    cursor: pointer;
+}
+.rt-link img {
+    height: 40px;
+    margin: 0 auto;
+}
+
+.imdb-link{
+    height: 40px;
+    width: 83px; 
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+.imdb-link img{
+    height: 40px;
+    margin: 20px auto;
+}
+
+.star {
+    height: 50px;
+    width: 50px;
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+.star img{
+    height: 50px;
+
+}
 
