@@ -2,95 +2,191 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Reel Match</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Reel Match</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
-<body>      
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <a class="navbar-brand" href="#">
-          <img src="http://placehold.it/150x50?text=Logo" alt="">
-    </a>                  
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">              
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark navigation">
+    <a class="navbar-brand" href="#"><img class="logo" src="assets/images/reelmatch-Logo.png"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+        <!-- Search Button -->
+        <div class="row search-container text-center">
+            <div class="input-group mb-3  ">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button" id='submit'>Search</button>
+              </div>
+              <input id="search-movie" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+            </div>
+          </div>
+          
+          <!-- End of Search Button -->
+
+    <div class="collapse navbar-collapse d-flex justify-content-end " id="navbarSupportedContent">
+      <ul class="navbar-nav ">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home
-            <span class="sr-only">(current)</span>
-            </a>                      
-          </li>
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Services</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-          </li>
-        </ul>
-      </div>
-    <div class="form-group">
-      <label for="">Email</label>
-      <input type="email" class="form-control" name="" id="email" aria-describedby="emailHelpId" placeholder="">
+        </li>
+
+      </ul>
+
+      <ul class="navbar-nav navbar-right">
+        <!-- Sign Up Button -->
+
+        <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal"><i class="fas fa-sign-in-alt"></i>
+            Sign Up</a></li>
+        <!-- Sign Up Modal -->
+
+        <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="signUpModalTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                    <!-- Form -->
+                    <div class="login-page">
+                        <div class="form">
+                          <form class="reg-form">
+                            <input type="text" id='name' placeholder="name"/>
+                            <input type="password" id='password'  placeholder="password"/>
+                            <input type="text" id='email' placeholder="email address"/>
+                            <button>create</button>
+                            <p class="message">Already registered? <a href="#">Sign In</a></p>
+                          </form>
+                          <form class="log-form">
+                            <input type="text" id='email' placeholder="email"/>
+                            <input type="password" id='password' placeholder="password"/>
+                            <button>login</button>
+                            <p class="message">Not registered? <a href="#">Create an account</a></p>
+                          </form>
+                        </div>
+                      </div>
+                      <!-- End of Form -->
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <!-- End Sign Up Modal -->
+
+        <!-- Sign In Button -->
+        <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i> Login</a></li>
+
+        <!-- Sign In Modal -->
+
+        <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="signInModalTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+               <!-- Form -->
+                  <div class="login-page">
+                      <div class="form">
+                        <form class="register-form">
+                          <input type="text" id='name' placeholder="name"/>
+                          <input type="password" id='password'  placeholder="password"/>
+                          <input type="text" id='email' placeholder="email address"/>
+                          <button>create</button>
+                          <p class="message">Already registered? <a href="#">Sign In</a></p>
+                        </form>
+                        <form class="login-form">
+                          <input type="text" id='email' placeholder="email"/>
+                          <input type="password" id='password' placeholder="password"/>
+                          <button>login</button>
+                          <p class="message">Not registered? <a href="#">Create an account</a></p>
+                        </form>
+                      </div>
+                    </div>
+                    <!-- End of Form -->
+
+              </div>
+  
+            </div>
+          </div>
+        </div>
+        <!-- End Sign In  Modal -->
+      </ul>
     </div>
-    <div class="form-group">
-    <label for="">Password</label>
-    <input type="password" class="form-control" name="" id="password" placeholder="">
-    </div>
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="login">Login</button>
+  </nav>
+
   </nav>
   <br>
   <br>
   <div class="container">
-    <!-- Search Button -->
-    <div class="row search-container text-center">
-      <div class="input-group mb-3  ">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button" id='submit'>Search</button>
-          </div>
-          <input id="search-movie" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-      </div>
-    </div>
+  
+   
+      <!-- menu of searches-->
     <div class="container">
       <div class="card">
         <div class="card-body">
-            <div class="btn-holder" role="group">
-                <button type="button" id="favorites" class="btn btn-outline-primary">  Favorites  </button>
-                
-                <button type="button" id="recommendations" class="btn btn-outline-primary">Recommendations</button>
-            </div>
+          <div class="btn-holder" role="group">
+            <button type="button" id="favorites" class="btn btn-outline-primary"> Favorites </button>
+
+            <button type="button" id="recommendations" class="btn btn-outline-primary">Recommendations</button>
+          </div>
         </div>
       </div>
     </div>
-    
-    <!-- End of Search Button -->
+
+    <!-- End menu of searches -->
     <div class="row">
       <div class="col-12 list-container">
         <div class="card">
           <h5 class="card-header" id="search-title">List of Movies</h5>
           <div class="card-body">
             <div id="seachbtns" class="btn-holder" role="group">
-                <button type="button" id="prevPage" class="btn btn-outline-primary"><<</button>
-                <button type="button" id="nextPage" class="btn btn-outline-primary">>></button>
+              <button type="button" id="prevPage" class="btn btn-outline-primary">
+                <<</button> <button type="button" id="nextPage" class="btn btn-outline-primary">>>
+              </button>
             </div>
             <div id="movieSection"></div>
             <div id="seachbtns-bottom" class="btn-holder" role="group">
-                <button type="button" id="prevPage-bottom" class="btn btn-outline-primary"><<</button>
-                <button type="button" id="nextPage-bottom" class="btn btn-outline-primary">>></button>
+              <button type="button" id="prevPage-bottom" class="btn btn-outline-primary">
+                <<</button> <button type="button" id="nextPage-bottom" class="btn btn-outline-primary">>>
+              </button>
             </div>
           </div>
         </div>
       </div>
-      </div>
-      </div>
-    </div>      
+    </div>
+  </div>
+  </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
 <script src="assets/js/recommend.js"></script>
 <script src="assets/js/user.js"></script>
+
 </html>
