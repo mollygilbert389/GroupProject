@@ -1,3 +1,9 @@
+body {
+    background-image: url("../images/bgpattern.png");
+    
+}
+
+
 .navigation{
     background-color: rgb(46, 46, 46);
     color:white;

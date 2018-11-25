@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Reel Match</title>
+  <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -56,100 +58,171 @@
 
         <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal"><i class="fas fa-sign-in-alt"></i>
             Sign Up</a></li>
-        <!-- Sign Up Modal -->
-
-        <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle"
-          aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="signUpModalTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                    <!-- Form -->
-                    <div class="login-page">
-                        <div class="form">
-                          <form class="reg-form">
-                            <input type="text" id='name' placeholder="name"/>
-                            <input type="password" id='password'  placeholder="password"/>
-                            <input type="text" id='email' placeholder="email address"/>
-                            <button>create</button>
-                            <p class="message">Already registered? <a href="#">Sign In</a></p>
-                          </form>
-                          <form class="log-form">
-                            <input type="text" id='email' placeholder="email"/>
-                            <input type="password" id='password' placeholder="password"/>
-                            <button>login</button>
-                            <p class="message">Not registered? <a href="#">Create an account</a></p>
-                          </form>
-                        </div>
-                      </div>
-                      <!-- End of Form -->
-              </div>
-              
-            </div>
-          </div>
-        </div>
-        <!-- End Sign Up Modal -->
+       
 
         <!-- Sign In Button -->
-        <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i> Login</a></li>
+        <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i> Sign In</a></li>
+        <!-- <li><a class="nav-link" href="#" data-toggle="modal" data-target="" id="sign-out"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li> -->
 
-        <!-- Sign In Modal -->
-
-        <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalTitle"
-          aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-
-              <div class="modal-header">
-                <h5 class="modal-title" id="signInModalTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-               <!-- Form -->
-                  <div class="login-page">
-                      <div class="form">
-                        <form class="register-form">
-                          <input type="text" id='name' placeholder="name"/>
-                          <input type="password" id='password'  placeholder="password"/>
-                          <input type="text" id='email' placeholder="email address"/>
-                          <button>create</button>
-                          <p class="message">Already registered? <a href="#">Sign In</a></p>
-                        </form>
-                        <form class="login-form">
-                          <input type="text" id='email' placeholder="email"/>
-                          <input type="password" id='password' placeholder="password"/>
-                          <button>login</button>
-                          <p class="message">Not registered? <a href="#">Create an account</a></p>
-                        </form>
-                      </div>
-                    </div>
-                    <!-- End of Form -->
-
-              </div>
-  
-            </div>
-          </div>
-        </div>
-        <!-- End Sign In  Modal -->
+       
       </ul>
     </div>
   </nav>
 
   </nav>
+
+   <!-- Sign Up Modal -->
+
+   <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle"
+   aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="signUpModalTitle">Modal title</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+             <!-- Form -->
+             <div class="login-page">
+                 <div class="form">
+                   <form class="reg-form">
+                     <input type="text" id='name' placeholder="name"/>
+                     <input type="password" id='password'  placeholder="password"/>
+                     <input type="text" id='email' placeholder="email address"/>
+                     <button id="register">create</button>
+                     <p class="message">Already registered? <a id='sign-in' href="#">Sign In</a></p>
+                   </form>
+                   <form class="log-form">
+                     <input type="text" id='email' placeholder="email"/>
+                     <input type="password" id='password' placeholder="password"/>
+                     <button id="sign-in2" >login</button>
+                     <p class="message">Not registered? <a href="#">Create an account</a></p>
+                   </form>
+                 </div>
+               </div>
+               <!-- End of Form -->
+       </div>
+       
+     </div>
+   </div>
+ </div>
+ <!-- End Sign Up Modal -->
+
+
+  <!-- Sign In Modal -->
+
+  <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="signInModalTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <!-- Form -->
+          <div class="login-page">
+              <div class="form">
+                <form class="register-form">
+                  <input type="text" id='name' placeholder="name"/>
+                  <input type="password" id='password'  placeholder="password"/>
+                  <input type="text" id='email' placeholder="email address"/>
+                  <button id="register2">create</button>
+                  <p class="message">Already registered? <a href="#">Sign In</a></p>
+                </form>
+                <form class="login-form">
+                  <input type="text" id='email' placeholder="email"/>
+                  <input type="password" id='password' placeholder="password"/>
+                  <button id="sign-in">login</button>
+                  <p class="message">Not registered? <a  href="#">Create an account</a></p>
+                </form>
+              </div>
+            </div>
+            <!-- End of Form -->
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- End Sign In  Modal -->
+  <br>
+  <br>
+  <br>
+  <br>
   <br>
   <br>
   <div class="container">
-  
+  <!-- Tab Tests -->
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="results-tab" data-toggle="tab" href="#results-tab-id" role="tab" aria-controls="results" aria-selected="true">Results</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="favorites" data-toggle="tab" href="#favorites-tab-id" role="tab" aria-controls="profile" aria-selected="false">Favorites</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="recommendations" data-toggle="tab" href="#recommendations-tab-id" role="tab" aria-controls="contact" aria-selected="false">Recommendations</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="results-tab-id" role="tabpanel" aria-labelledby="results-tab">
+      <div id="seachbtns" class="btn-holder text-center" role="group">
+        <br>
+        <button type="button" id="prevPage" class="btn btn-danger btn-sm">
+            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button> <button type="button" id="nextPage" class="btn btn-danger btn-sm"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div id="movieSection"></div>
+      <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
+          <br>
+        <button type="button" id="prevPage-bottom" class="btn btn-danger btn-sm">
+            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button> <button type="button" id="nextPage-bottom" class="btn btn-danger btn-sm"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="tab-pane fade" id="favorites-tab-id" role="tabpanel" aria-labelledby="favorites-tab">
+            
+
+      <div id="seachbtns" class="btn-holder text-center" role="group">
+        <button type="button" id="prevPage" class="btn btn-outline-primary">
+          <<</button> <button type="button" id="nextPage" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div id="favorites-info"></div>
+      <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
+        <button type="button" id="prevPage-bottom" class="btn btn-outline-primary">
+          <<</button> <button type="button" id="nextPage-bottom" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+        </button>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="recommendations-tab-id" role="tabpanel" aria-labelledby="recomentadions-tab">
+        
+        <div id="seachbtns" class="btn-holder text-center" role="group">
+            <button type="button" id="prevPage" class="btn btn-outline-primary">
+              <<</button> <button type="button" id="nextPage" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div id="recommendation-info"></div>
+          <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
+            <button type="button" id="prevPage-bottom" class="btn btn-outline-primary">
+              <<</button> <button type="button" id="nextPage-bottom" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            </button>
+          </div>
+    </div>
+  </div>
+  <!-- End of Tab Tests -->
    
       <!-- menu of searches-->
-    <div class="container">
+    <!-- <div class="container">
       <div class="card">
         <div class="card-body">
           <div class="btn-holder" role="group">
@@ -159,10 +232,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- End menu of searches -->
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-12 list-container">
         <div class="card">
           <h5 class="card-header" id="search-title">List of Movies</h5>
@@ -181,11 +254,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   </div>
 </body>
-<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+
 <script src="assets/js/recommend.js"></script>
 <script src="assets/js/user.js"></script>
 

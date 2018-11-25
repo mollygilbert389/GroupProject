@@ -4,16 +4,16 @@
 //movie database link: https://developers.themoviedb.org/3/movies/get-movie-details
 
 // Initialize Firebase
-var config = {
-    apiKey: "AIzaSyDwKzfB-DM1BrllQTwCe4MmY5gWEi3tD7o",
-    authDomain: "reelmatchut.firebaseapp.com",
-    databaseURL: "https://reelmatchut.firebaseio.com",
-    projectId: "reelmatchut",
-    storageBucket: "reelmatchut.appspot.com",
-    messagingSenderId: "539462332267"
-  };
-firebase.initializeApp(config);
-var database = firebase.database();    
+// var config = {
+//     apiKey: "AIzaSyDwKzfB-DM1BrllQTwCe4MmY5gWEi3tD7o",
+//     authDomain: "reelmatchut.firebaseapp.com",
+//     databaseURL: "https://reelmatchut.firebaseio.com",
+//     projectId: "reelmatchut",
+//     storageBucket: "reelmatchut.appspot.com",
+//     messagingSenderId: "539462332267"
+//   };
+// firebase.initializeApp(config);
+// var database = firebase.database();    
 var favmovies = ["tt0172495","tt0095016","tt1431045","tt0112573","tt0371746","tt4481414"];
 // Gladitator, Die Hard, Deadpool, Braveheart, Iron Man, Gifted
 var favtmdb = [];
@@ -219,7 +219,7 @@ var createRecomCards = function(data) {
     newCont.append(recomIMG);
     newCont.append(recomTxt);
     newCont.append(recomBtns);
-    $("#movieSection").append(newCont);
+    $("#recommendation-info").append(newCont);
 }
 
 var searchMovie = function(movie) {
@@ -442,7 +442,7 @@ var createFavoriteCards = function(data) {
     recomBtns.append(recomFav);
     newCont.append(recomTxt);
     newCont.append(recomBtns);
-    $("#movieSection").append(newCont);
+    $("#favorites-info").append(newCont);
 }
 
 
@@ -578,6 +578,16 @@ $("#prevPage-bottom").on("click", function(event){
     }
 })
 
+/*Tab Navigation*/
+$(".nav-link").click( function() {
+    $(".nav-link").removeClass("active");
+});
+
+$('#myTab a').on('click', function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+/*End of Tab Navigation  */
 
 
 
