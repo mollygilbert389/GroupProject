@@ -37,3 +37,8 @@
     margin-bottom: 10px;
    
 }
+
+#map {
+    background: green;
+    text-align: center;
+}
