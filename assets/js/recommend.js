@@ -578,6 +578,7 @@ $("#prevPage-bottom").on("click", function(event){
     }
 })
 
+
 $("#x").on("click", function () {
     var modal = $("#trailerModal");
     modal.attr("style", "display: none")
@@ -610,6 +611,5 @@ var makevid = function(id) {
     trailer.empty()
     trailer.append(newFrame);
 }
-
 
 

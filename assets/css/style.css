@@ -97,6 +97,7 @@ p{
 }
 .pic{
 height:200px;
+
 }
 .text{
     height: 100%;
@@ -109,6 +110,7 @@ height:200px;
     float: left;
     width:15%;
 }
+
 
 
 .recommendations-container{
@@ -140,6 +142,7 @@ height:200px;
     height: auto;
     border: 5px solid black;
     text-align: left;
+
     margin-bottom: 10px;
     overflow:auto;
 }
@@ -150,7 +153,6 @@ height:200px;
     text-align: left;
     margin-bottom: 10px;
     overflow:auto;
-
 }
 
 .RIMG, .resultTxt {
@@ -265,6 +267,7 @@ height:200px;
   }
   /* end modal*/
 
+
 @media only screen and (max-width: 1200px) {
    
     .RIMG{
@@ -335,5 +338,6 @@ color: white;
         width:8%;
     }
     
+
 }
 
