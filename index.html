@@ -18,6 +18,7 @@
     crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
     crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
@@ -30,17 +31,17 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-        <!-- Search Button -->
-        <div class="row search-container text-center">
-            <div class="input-group mb-3  ">
-              <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary" type="button" id='submit'>Search</button>
-              </div>
-              <input id="search-movie" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-            </div>
-          </div>
-          
-          <!-- End of Search Button -->
+    <!-- Search Button -->
+    <div class="row search-container text-center">
+      <div class="input-group mb-3  ">
+        <div class="input-group-prepend">
+          <button class="btn btn-outline-secondary" type="button" id='submit'>Search</button>
+        </div>
+        <input id="search-movie" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+      </div>
+    </div>
+
+    <!-- End of Search Button -->
 
     <div class="collapse navbar-collapse d-flex justify-content-end " id="navbarSupportedContent">
       <ul class="navbar-nav ">
@@ -58,99 +59,98 @@
 
         <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal"><i class="fas fa-sign-in-alt"></i>
             Sign Up</a></li>
-       
+
 
         <!-- Sign In Button -->
-        <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i> Sign In</a></li>
+        <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i>
+            Sign In</a></li>
         <!-- <li><a class="nav-link" href="#" data-toggle="modal" data-target="" id="sign-out"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li> -->
 
-       
+
       </ul>
     </div>
   </nav>
 
   </nav>
 
-   <!-- Sign Up Modal -->
+  <!-- Sign Up Modal -->
 
-   <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle"
-   aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered" role="document">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h5 class="modal-title" id="signUpModalTitle">Modal title</h5>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-         </button>
-       </div>
-       <div class="modal-body">
-             <!-- Form -->
-             <div class="login-page">
-                 <div class="form">
-                   <form class="reg-form">
-                     <input type="text" id='name' placeholder="name"/>
-                     <input type="password" id='password'  placeholder="password"/>
-                     <input type="text" id='email' placeholder="email address"/>
-                     <button id="register">create</button>
-                     <p class="message">Already registered? <a id='sign-in' href="#">Sign In</a></p>
-                   </form>
-                   <form class="log-form">
-                     <input type="text" id='email' placeholder="email"/>
-                     <input type="password" id='password' placeholder="password"/>
-                     <button id="sign-in2" >login</button>
-                     <p class="message">Not registered? <a href="#">Create an account</a></p>
-                   </form>
-                 </div>
-               </div>
-               <!-- End of Form -->
-       </div>
-       
-     </div>
-   </div>
- </div>
- <!-- End Sign Up Modal -->
+  <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="signUpModalTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Form -->
+          <div class="login-page">
+            <div class="form">
+              <form class="reg-form">
+                <input type="text" id='name' placeholder="name" />
+                <input type="password" id='password' placeholder="password" />
+                <input type="text" id='email' placeholder="email address" />
+                <button id="register">create</button>
+                <p class="message">Already registered? <a id='sign-in' href="#">Sign In</a></p>
+              </form>
+              <form class="log-form">
+                <input type="text" id='email' placeholder="email" />
+                <input type="password" id='password' placeholder="password" />
+                <button id="sign-in2">login</button>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+              </form>
+            </div>
+          </div>
+          <!-- End of Form -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End Sign Up Modal -->
 
 
   <!-- Sign In Modal -->
 
-  <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
+  <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="signInModalTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <!-- Form -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="signInModalTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Form -->
           <div class="login-page">
-              <div class="form">
-                <form class="register-form">
-                  <input type="text" id='name' placeholder="name"/>
-                  <input type="password" id='password'  placeholder="password"/>
-                  <input type="text" id='email' placeholder="email address"/>
-                  <button id="register2">create</button>
-                  <p class="message">Already registered? <a href="#">Sign In</a></p>
-                </form>
-                <form class="login-form">
-                  <input type="text" id='email' placeholder="email"/>
-                  <input type="password" id='password' placeholder="password"/>
-                  <button id="sign-in">login</button>
-                  <p class="message">Not registered? <a  href="#">Create an account</a></p>
-                </form>
-              </div>
+            <div class="form">
+              <form class="register-form">
+                <input type="text" id='name' placeholder="name" />
+                <input type="password" id='password' placeholder="password" />
+                <input type="text" id='email' placeholder="email address" />
+                <button id="register2">create</button>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+              </form>
+              <form class="login-form">
+                <input type="text" id='email' placeholder="email" />
+                <input type="password" id='password' placeholder="password" />
+                <button id="sign-in">login</button>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+              </form>
             </div>
-            <!-- End of Form -->
+          </div>
+          <!-- End of Form -->
+
+        </div>
 
       </div>
-
     </div>
   </div>
-</div>
-<!-- End Sign In  Modal -->
+  <!-- End Sign In  Modal -->
   <br>
   <br>
   <br>
@@ -158,70 +158,79 @@
   <br>
   <br>
   <div class="container">
-  <!-- Tab Tests -->
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" id="results-tab" data-toggle="tab" href="#results-tab-id" role="tab" aria-controls="results" aria-selected="true">Results</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="favorites" data-toggle="tab" href="#favorites-tab-id" role="tab" aria-controls="profile" aria-selected="false">Favorites</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="recommendations" data-toggle="tab" href="#recommendations-tab-id" role="tab" aria-controls="contact" aria-selected="false">Recommendations</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="results-tab-id" role="tabpanel" aria-labelledby="results-tab">
-      <div id="seachbtns" class="btn-holder text-center" role="group">
-        <br>
-        <button type="button" id="prevPage" class="btn btn-danger btn-sm">
-            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button> <button type="button" id="nextPage" class="btn btn-danger btn-sm"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div id="movieSection"></div>
-      <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
-          <br>
-        <button type="button" id="prevPage-bottom" class="btn btn-danger btn-sm">
-            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button> <button type="button" id="nextPage-bottom" class="btn btn-danger btn-sm"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-        </button>
-      </div>
-
-    </div>
-
-    <div class="tab-pane fade" id="favorites-tab-id" role="tabpanel" aria-labelledby="favorites-tab">
-            
-
-      <div id="seachbtns" class="btn-holder text-center" role="group">
-        <button type="button" id="prevPage" class="btn btn-outline-primary">
-          <<</button> <button type="button" id="nextPage" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div id="favorites-info"></div>
-      <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
-        <button type="button" id="prevPage-bottom" class="btn btn-outline-primary">
-          <<</button> <button type="button" id="nextPage-bottom" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-        </button>
-      </div>
-
-    </div>
-    <div class="tab-pane fade" id="recommendations-tab-id" role="tabpanel" aria-labelledby="recomentadions-tab">
-        
+    <!-- Tab Tests -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item ">
+        <a class="nav-link active " id="results-tab" data-toggle="tab" href="#results-tab-id" role="tab" aria-controls="results"
+          aria-selected="true">Results</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" id="favorites" data-toggle="tab" href="#favorites-tab-id" role="tab" aria-controls="profile"
+          aria-selected="false">Favorites</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" id="recommendations" data-toggle="tab" href="#recommendations-tab-id" role="tab"
+          aria-controls="contact" aria-selected="false">Recommendations</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="results-tab-id" role="tabpanel" aria-labelledby="results-tab">
         <div id="seachbtns" class="btn-holder text-center" role="group">
-            <button type="button" id="prevPage" class="btn btn-outline-primary">
-              <<</button> <button type="button" id="nextPage" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-            </button>
-          </div>
-          <div id="recommendation-info"></div>
-          <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
-            <button type="button" id="prevPage-bottom" class="btn btn-outline-primary">
-              <<</button> <button type="button" id="nextPage-bottom" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-            </button>
-          </div>
+          <br>
+          <button type="button" id="prevPage" class="btn btn-danger btn-sm">
+            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button> <button type="button" id="nextPage"
+            class="btn btn-danger btn-sm"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div id="movieSection"></div>
+        <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
+          <br>
+          <button type="button" id="prevPage-bottom" class="btn btn-danger btn-sm">
+            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button> <button type="button" id="nextPage-bottom"
+            class="btn btn-danger btn-sm"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="tab-pane fade" id="favorites-tab-id" role="tabpanel" aria-labelledby="favorites-tab">
+
+
+        <div id="seachbtns" class="btn-holder text-center" role="group">
+          <button type="button" id="prevPage" class="btn btn-outline-primary">
+            <<</button> <button type="button" id="nextPage" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right"
+                aria-hidden="true"></i>
+          </button>
+        </div>
+        <div id="favorites-info"></div>
+        <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
+          <button type="button" id="prevPage-bottom" class="btn btn-outline-primary">
+            <<</button> <button type="button" id="nextPage-bottom" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right"
+                aria-hidden="true"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="tab-pane fade" id="recommendations-tab-id" role="tabpanel" aria-labelledby="recomentadions-tab">
+
+        <div id="seachbtns" class="btn-holder text-center" role="group">
+          <button type="button" id="prevPage" class="btn btn-outline-primary">
+            <<</button> <button type="button" id="nextPage" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right"
+                aria-hidden="true"></i>
+          </button>
+        </div>
+        <div id="recommendation-info"></div>
+        <div id="seachbtns-bottom" class="btn-holder text-center" role="group">
+          <button type="button" id="prevPage-bottom" class="btn btn-outline-primary">
+            <<</button> <button type="button" id="nextPage-bottom" class="btn btn-outline-primary"><i class="fa fa-chevron-circle-right"
+                aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-  <!-- End of Tab Tests -->
-   
-      <!-- menu of searches-->
+    <!-- End of Tab Tests -->
+
+    <!-- menu of searches-->
     <!-- <div class="container">
       <div class="card">
         <div class="card-body">
