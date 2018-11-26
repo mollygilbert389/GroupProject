@@ -579,5 +579,37 @@ $("#prevPage-bottom").on("click", function(event){
 })
 
 
+$("#x").on("click", function () {
+    var modal = $("#trailerModal");
+    modal.attr("style", "display: none")
+})
+
+var playTrailer = function (movieid) {
+    event.preventDefault();
+    var IDurl = "https://api.themoviedb.org/3/find/" + movieid + "?api_key=" + tmdb_key + "&language=en-US&external_source=imdb_id"
+    $.ajax({
+        url: IDurl,
+        method: "GET"
+    }).done(function (data) {
+        var tmdbID = data.movie_results[0].id;
+        var videourl = "https://api.themoviedb.org/3/movie/" + String(tmdbID) + "/videos?api_key=" + tmdb_key + "&language=en-US"
+        $.ajax({
+            url: videourl,
+            method: "GET"
+        }).done(function (data) {
+            var movie = data.results[0].key
+            makevid(movie)
+        })
+    })
+}
+
+var makevid = function(id) {
+    var newFrame = $("<iframe>");
+    newFrame.addClass("trailerSize")
+    newFrame.attr("src", "https://www.youtube.com/embed/" + id)
+    var trailer = $("#trailer");
+    trailer.empty()
+    trailer.append(newFrame);
+}
 
 
