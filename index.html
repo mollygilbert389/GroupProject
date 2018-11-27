@@ -6,17 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Reel Match</title>
-  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-    crossorigin="anonymous">
-
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
@@ -73,16 +67,22 @@
                     <div class="login-page">
                         <div class="form">
                           <form class="reg-form">
-                            <input type="text" id='name' placeholder="name"/>
-                            <input type="password" id='password'  placeholder="password"/>
-                            <input type="text" id='email' placeholder="email address"/>
-                            <button>create</button>
-                            <p class="message">Already registered? <a href="#">Sign In</a></p>
+                            <input type="text" id='name4' placeholder="name" />
+                            <input type="password" id='password4' placeholder="password" />
+                            <input type="text" id='email4' placeholder="email address" />
+                            <div class="error">
+                              <span id="errormessage4"></span>
+                            </div>
+                            <button id="register">create</button>
+                            <p class="message">Already registered? <a id='sign-in3' href="#">Sign In</a></p>
                           </form>
                           <form class="log-form">
-                            <input type="text" id='email' placeholder="email"/>
-                            <input type="password" id='password' placeholder="password"/>
-                            <button>login</button>
+                            <input type="text" id='email1' placeholder="email" />
+                            <input type="password" id='password1' placeholder="password" />
+                            <div class="error">
+                              <span id="errormessage1"></span>
+                            </div>
+                            <button id="sign-in2">login</button>
                             <p class="message">Not registered? <a href="#">Create an account</a></p>
                           </form>
                         </div>
@@ -116,16 +116,22 @@
                   <div class="login-page">
                       <div class="form">
                         <form class="register-form">
-                          <input type="text" id='name' placeholder="name"/>
-                          <input type="password" id='password'  placeholder="password"/>
-                          <input type="text" id='email' placeholder="email address"/>
-                          <button>create</button>
+                          <input type="text" id='name3' placeholder="name" />
+                          <input type="password" id='password2' placeholder="password" />
+                          <input type="email" id='email2' placeholder="email address" />
+                          <div class="error">
+                            <span id="errormessage2"></span>
+                          </div>
+                          <button id="register2">create</button>
                           <p class="message">Already registered? <a href="#">Sign In</a></p>
                         </form>
                         <form class="login-form">
-                          <input type="text" id='email' placeholder="email"/>
-                          <input type="password" id='password' placeholder="password"/>
-                          <button>login</button>
+                          <input type="email" id='email' placeholder="email" />
+                          <input type="password" id='password' placeholder="password" />
+                          <div class="error">
+                            <span id="errormessage" ></span>
+                          </div>
+                          <button id="sign-in">login</button>
                           <p class="message">Not registered? <a href="#">Create an account</a></p>
                         </form>
                       </div>
@@ -150,7 +156,7 @@
   <div id="trailerModal" class="modal">
       <div class="trailerPop">
           <div id="trailer">
-              <iframe id="player" width="640" height="390" src="https://www.youtube.com/embed/LKFuXETZUsI"></iframe>
+              <iframe id="player" width="640" height="390" src="#"></iframe>
           </div>
         <button id="x">x</button>
       </div>
@@ -199,6 +205,5 @@
 </body>
 <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
 <script src="assets/js/recommend.js"></script>
-<script src="assets/js/user.js"></script>
 
 </html>
