@@ -749,6 +749,7 @@ $(document).ready(function() {
         }
     });
 
+    
     $( "#register2" ).on( "click", function() {
         event.preventDefault();
         name = $("#name2").val().trim();
@@ -770,8 +771,13 @@ $(document).ready(function() {
         }
     });
 
+
     $("#sign-in").on( "click", function() {
         event.preventDefault();
+        $("#loginButton").hide();
+        $("#signupButton").hide();
+        $("#logoutButton").attr('style','display: block');
+
         var email = $("#email").val().trim();
         var password = $("#password").val().trim();
         firebase.auth().signInWithEmailAndPassword(email, password)
@@ -783,6 +789,36 @@ $(document).ready(function() {
                 $("#password").val("")
             });
     });
+    $("#sign-in2").on( "click", function() {
+        event.preventDefault();
+        $("#loginButton").hide();
+        $("#signupButton").hide();
+        $("#logoutButton").attr('style','display: block');
+
+        var email = $("#email1").val().trim();
+        var password = $("#password1").val().trim();
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(user => loginSuccess(user))
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                $("#errormessage2").text(errorMessage)
+                $("#password2").val("")
+                });
+        });
+
+   
+$("#logoutButton").on("click", function(){
+  
+    firebase.auth().signOut().then(function() {
+        // Sign- 
+         $("#loginButton").show();
+    $("#signupButton").show();
+    $("#logoutButton").attr('style','display: none');
+      }, function(error) {
+        // An error happened.
+      });
+})
 
     $("#sing-in2").on( "click", function() {
         event.preventDefault();
