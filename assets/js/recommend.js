@@ -199,7 +199,7 @@ var createRecomCards = function(data) {
                     $(this).attr("src", "assets/images/star-inactive.png")
                 }
     })
-    RTimg = $("<img>").attr("src", "assets/images/rt_logo.jpg");
+    RTimg = $("<img>").attr("src", "assets/images/rt_logo.png");
     IMDBimg = $("<img>").attr("src", "assets/images/IMDB.svg");
     recomIMG.append(posterIMG)
     recomTxt.append(titleTag);

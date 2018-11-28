@@ -26,52 +26,51 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark navigation">
     <a class="navbar-brand" href="#"><img class="logo" src="assets/images/reelmatch-Logo.png"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Search Button -->
-    <div class="row search-container text-center">
-      <div class="input-group mb-3  ">
-        <div class="input-group-prepend">
-          <button class="btn btn-outline-secondary" type="button" id='submit'>Search</button>
+    </button> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+       <!-- Search Button -->
+       <div class="row search-container text-center">
+          <div class="input-group mb-3  ">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-secondary" type="button" id='submit'>Search</button>
+            </div>
+            <input id="search-movie" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+          </div>
         </div>
-        <input id="search-movie" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-      </div>
-    </div>
+    
+        <!-- End of Search Button -->
 
-    <!-- End of Search Button -->
-
-    <div class="collapse navbar-collapse d-flex justify-content-end " id="navbarSupportedContent">
-      <ul class="navbar-nav ">
+    <div class="collapse navbar-collapse justify-content-end " id="navbarSupportedContent">
+   
+      <ul class="navbar-nav navbar-collapse-properties align-items-end">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link menu-item" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link menu-item" href="#">About</a>
         </li>
+      <!-- Sign Up Button -->
 
+      <li><a class="nav-link menu-item" href="#" data-toggle="modal" data-target="#signUpModal"><i class="fas fa-sign-in-alt"></i>
+        Sign Up</a></li>
+
+
+    <!-- Sign In Button -->
+    <li><a class="nav-link menu-item" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i>
+        Sign In</a></li>
       </ul>
 
-      <ul class="navbar-nav navbar-right">
-        <!-- Sign Up Button -->
-
-        <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal"><i class="fas fa-sign-in-alt"></i>
-            Sign Up</a></li>
 
 
-        <!-- Sign In Button -->
-        <li><a class="nav-link" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i>
-            Sign In</a></li>
-        <!-- <li><a class="nav-link" href="#" data-toggle="modal" data-target="" id="sign-out"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li> -->
-
-
-      </ul>
     </div>
   </nav>
 
-  </nav>
+  
 
   <!-- Sign Up Modal -->
 
@@ -119,7 +118,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h5 class="modal-title" id="signInModalTitle">Modal title</h5>
+          <h5 class="modal-title text-center" id="signInModalTitle">Please type your Credentials</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -161,15 +160,15 @@
     <!-- Tab Tests -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item ">
-        <a class="nav-link active " id="results-tab" data-toggle="tab" href="#results-tab-id" role="tab" aria-controls="results"
+        <a class="nav-link tab-link active " id="results-tab" data-toggle="tab" href="#results-tab-id" role="tab" aria-controls="results"
           aria-selected="true">Results</a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link" id="favorites" data-toggle="tab" href="#favorites-tab-id" role="tab" aria-controls="profile"
+        <a class="nav-link tab-link" id="favorites" data-toggle="tab" href="#favorites-tab-id" role="tab" aria-controls="profile"
           aria-selected="false">Favorites</a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link" id="recommendations" data-toggle="tab" href="#recommendations-tab-id" role="tab"
+        <a class="nav-link tab-link" id="recommendations" data-toggle="tab" href="#recommendations-tab-id" role="tab"
           aria-controls="contact" aria-selected="false">Recommendations</a>
       </li>
     </ul>
