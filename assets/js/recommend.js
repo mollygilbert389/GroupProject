@@ -148,7 +148,7 @@ var getResults = function(array) {
     page = 0;
     for (var i = 0; i < 10; i++) {
         var moiveid = array[i]
-        var movieurl = "http://www.omdbapi.com/?i=" + moiveid + "&y=&plot=short&apikey="+omdb_key
+        var movieurl = "https://www.omdbapi.com/?i=" + moiveid + "&y=&plot=short&apikey="+omdb_key
         $.ajax({
             url: movieurl,
             method: "GET"
@@ -370,7 +370,7 @@ var turnPage = function(movies) {
             for (var i = page; i < array.length; i++) {
                 var movieid = array[i]
                 if (movieid != null && movieid.length > 0) {
-                    var movieurl = "http://www.omdbapi.com/?i=" + movieid + "&y=&plot=short&apikey="+omdb_key
+                    var movieurl = "https://www.omdbapi.com/?i=" + movieid + "&y=&plot=short&apikey="+omdb_key
                     $.ajax({
                         url: movieurl,
                         method: "GET"
@@ -389,7 +389,7 @@ var turnPage = function(movies) {
             for (var i = page; i < page+10; i++) {
                 var movieid = array[i]
                 if (movieid != null && movieid.length > 0) {
-                    var movieurl = "http://www.omdbapi.com/?i=" + movieid + "&y=&plot=short&apikey="+omdb_key
+                    var movieurl = "https://www.omdbapi.com/?i=" + movieid + "&y=&plot=short&apikey="+omdb_key
                     $.ajax({
                         url: movieurl,
                         method: "GET"
