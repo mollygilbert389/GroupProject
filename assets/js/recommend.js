@@ -530,6 +530,9 @@ var loginSuccess = function(user) {
     loggedIn = true;
     database.ref("/users").once("value").then(function(data) {
         favmovies = data.val()[userid].favorites
+        if(typeof(favmovies)== "undefined") {
+            favmovies = [];
+        }
     })
 }
 
@@ -568,228 +571,229 @@ var checkEmail = function(email) {
 }
 
 
-$("#submit").on("click", function(event){
-    event.preventDefault();
-    $("#movieSection").empty()
-    $("#recommendSection").empty();
-    $("#seachbtns").attr("style","display:block")
-    $("#seachbtns-bottom").attr("style","display:block")
-    var movie = $("#search-movie").val();
-    searchType = "search";
-    $("#search-title").text("Search Results");
-    page = 0;
-    searchMovie(movie);
-})
 
-$("#recommendations").on("click", function(event){
-    event.preventDefault();
-    if( favmovies.length > 0) {
+$(document).ready(function() {
+    auth.signOut();
+   
+    $("#submit").on("click", function(event){
+        event.preventDefault();
         $("#movieSection").empty()
         $("#recommendSection").empty();
         $("#seachbtns").attr("style","display:block")
         $("#seachbtns-bottom").attr("style","display:block")
-        $("#search-title").text("Recommendations")
-        searchType = "recommend";
+        var movie = $("#search-movie").val();
+        searchType = "search";
+        $("#search-title").text("Search Results");
+        page = 0;
+        searchMovie(movie);
+    })
+
+    $("#recommendations").on("click", function(event){
+        event.preventDefault();
+        if( favmovies.length > 0) {
+            $("#movieSection").empty()
+            $("#recommendSection").empty();
+            $("#seachbtns").attr("style","display:block")
+            $("#seachbtns-bottom").attr("style","display:block")
+            $("#search-title").text("Recommendations")
+            searchType = "recommend";
+            page=0;
+            getRecommendations(favmovies);
+        }
+    })
+
+    $("#favorites").on("click", function(event){
+        event.preventDefault();
+        $("#movieSection").empty()
+        $("#recommendSection").empty();
+        $("#seachbtns").attr("style","display:block")
+        $("#seachbtns-bottom").attr("style","display:block")
+        $("#search-title").text("Favorites")
+        searchType = "favorites";
         page=0;
-        getRecommendations(favmovies);
-    }
-})
-
-$("#favorites").on("click", function(event){
-    event.preventDefault();
-    $("#movieSection").empty()
-    $("#recommendSection").empty();
-    $("#seachbtns").attr("style","display:block")
-    $("#seachbtns-bottom").attr("style","display:block")
-    $("#search-title").text("Favorites")
-    searchType = "favorites";
-    page=0;
-    getFavorites(favmovies);
-})
+        getFavorites(favmovies);
+    })
 
 
-$("#nextPage").on("click", function(event){
-    event.preventDefault();
-    if (searchType == "search") {
-        if (page <= searchResults.length-9) {
-            page += 10;
-            $("#movieSection").empty();
-            turnPage(searchResults);
+    $("#nextPage").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if (page <= searchResults.length-9) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page <= recommendations.length-9 && page >= 0) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page <= favmovies.length-9) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(favmovies);
+            }
         }
-    } else if (searchType == "recommend") {
-        if (page <= recommendations.length-9 && page >= 0) {
-            page += 10;
-            $("#movieSection").empty();
-            turnPage(recommendations);
-        }
-    } else if (searchType == "favorites") {
-        if (page <= favmovies.length-9) {
-            page += 10;
-            $("#movieSection").empty();
-            turnPage(favmovies);
-        }
-    }
-})
+    })
 
-$("#prevPage").on("click", function(event){
-    event.preventDefault();
-    if (searchType == "search") {
-        if ( page >= 10 ) {
-            page -= 10;
-            $("#movieSection").empty();
-            turnPage(searchResults);
+    $("#prevPage").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if ( page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page <= recommendations.length && page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page <= favmovies.length && page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(favmovies);
+            }
         }
-    } else if (searchType == "recommend") {
-        if (page <= recommendations.length && page >= 10 ) {
-            page -= 10;
-            $("#movieSection").empty();
-            turnPage(recommendations);
-        }
-    } else if (searchType == "favorites") {
-        if (page <= favmovies.length && page >= 10 ) {
-            page -= 10;
-            $("#movieSection").empty();
-            turnPage(favmovies);
-        }
-    }
-})
+    })
 
-$("#nextPage-bottom").on("click", function(event){
-    event.preventDefault();
-    if (searchType == "search") {
-        if (page <= searchResults.length-9) {
-            page += 10;
-            $("#movieSection").empty();
-            turnPage(searchResults);
+    $("#nextPage-bottom").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if (page <= searchResults.length-9) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page <= recommendations.length-9 && page >= 0) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page <= favmovies.length-9) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(favmovies);
+            }
         }
-    } else if (searchType == "recommend") {
-        if (page <= recommendations.length-9 && page >= 0) {
-            page += 10;
-            $("#movieSection").empty();
-            turnPage(recommendations);
-        }
-    } else if (searchType == "favorites") {
-        if (page <= favmovies.length-9) {
-            page += 10;
-            $("#movieSection").empty();
-            turnPage(favmovies);
-        }
-    }
-})
+    })
 
-$("#prevPage-bottom").on("click", function(event){
-    event.preventDefault();
-    if (searchType == "search") {
-        if ( page >= 10 ) {
-            page -= 10;
-            $("#movieSection").empty();
-            turnPage(searchResults);
+    $("#prevPage-bottom").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if ( page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page <= recommendations.length && page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page <= favmovies.length && page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(favmovies);
+            }
         }
-    } else if (searchType == "recommend") {
-        if (page <= recommendations.length && page >= 10 ) {
-            page -= 10;
-            $("#movieSection").empty();
-            turnPage(recommendations);
-        }
-    } else if (searchType == "favorites") {
-        if (page <= favmovies.length && page >= 10 ) {
-            page -= 10;
-            $("#movieSection").empty();
-            turnPage(favmovies);
-        }
-    }
-})
+    })
 
-$("#x").on("click", function () {
-    var modal = $("#trailerModal");
-    modal.attr("style", "display: none")
-    $("#trailer").empty();
-})
+    $("#x").on("click", function () {
+        var modal = $("#trailerModal");
+        modal.attr("style", "display: none")
+        $("#trailer").empty();
+    })
 
 
-$('.message a').click(function () {
-    $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
-  });
+    $('.message a').click(function () {
+        $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+    });
 
 
-$( "#register" ).on( "click", function() {
-    event.preventDefault();
-    name = $("#name4").val().trim();
-    var email = $("#email4").val().trim();
-    var password = $("#password4").val().trim();
-    var condition = nameCheck(name);
-    var condition2 = checkEmail(email);
-    if (condition == true && condition2 == true) {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(user => createSucess(user))
-        .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        $("#errormessage4").text(errorMessage)
-        $("#password4").val("")
-        });
-    } else {
-        console.log("Bad Name or Email")
-    }
-});
-
-$( "#register2" ).on( "click", function() {
-    event.preventDefault();
-    name = $("#name2").val().trim();
-    var email = $("#email2").val().trim();
-    var password = $("#password2").val().trim();
-    var condition = nameCheck(name);
-    var condition2 = checkEmail(email);
-    if (condition == true && condition2 == true) {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(user => createSucess(user))
-        .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        $("#errormessage2").text(errorMessage)
-        $("#password2").val("")
-        });
-    } else {
-        console.log("Bad Name or Email")
-    }
-});
-
-$("#sign-in").on( "click", function() {
-    event.preventDefault();
-    var email = $("#email").val().trim();
-    var password = $("#password").val().trim();
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(user => loginSuccess(user))
-        .catch(function(error) {
+    $( "#register" ).on( "click", function() {
+        event.preventDefault();
+        name = $("#name4").val().trim();
+        var email = $("#email4").val().trim();
+        var password = $("#password4").val().trim();
+        var condition = nameCheck(name);
+        var condition2 = checkEmail(email);
+        if (condition == true && condition2 == true) {
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(user => createSucess(user))
+            .catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
-            $("#errormessage").text(errorMessage)
-            $("#password").val("")
-        });
-});
+            $("#errormessage4").text(errorMessage)
+            $("#password4").val("")
+            });
+        } else {
+            console.log("Bad Name or Email")
+        }
+    });
 
-$("#sing-in2").on( "click", function() {
-    event.preventDefault();
-    var email = $("#email1").val().trim();
-    var password = $("#password1").val().trim();
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(user => loginSuccess(user))
-        .catch(function(error) {
+    $( "#register2" ).on( "click", function() {
+        event.preventDefault();
+        name = $("#name2").val().trim();
+        var email = $("#email2").val().trim();
+        var password = $("#password2").val().trim();
+        var condition = nameCheck(name);
+        var condition2 = checkEmail(email);
+        if (condition == true && condition2 == true) {
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(user => createSucess(user))
+            .catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
-            $("#errormessage1").text(errorMessage)
-            $("#password1").val("")
+            $("#errormessage2").text(errorMessage)
+            $("#password2").val("")
+            });
+        } else {
+            console.log("Bad Name or Email")
+        }
+    });
+
+    $("#sign-in").on( "click", function() {
+        event.preventDefault();
+        var email = $("#email").val().trim();
+        var password = $("#password").val().trim();
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(user => loginSuccess(user))
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                $("#errormessage").text(errorMessage)
+                $("#password").val("")
+            });
+    });
+
+    $("#sing-in2").on( "click", function() {
+        event.preventDefault();
+        var email = $("#email1").val().trim();
+        var password = $("#password1").val().trim();
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(user => loginSuccess(user))
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                $("#errormessage1").text(errorMessage)
+                $("#password1").val("")
+            });
+    });
+
+    $("#signout").on("click", function(){
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+        }, function(error) {
+            // An error happened.
         });
-});
-
-$("#signout").on("click", function(){
-    firebase.auth().signOut().then(function() {
-        // Sign-out successful.
-      }, function(error) {
-        // An error happened.
-      });
-})
-
-$(document).ready(function() {
-    auth.signOut();
+    })
 });
