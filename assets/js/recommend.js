@@ -235,7 +235,7 @@ var createRecomCards = function(data) {
     newCont.append(recomIMG);
     newCont.append(recomTxt);
     newCont.append(recomBtns);
-    $("#movieSection").append(newCont);
+    $("#recommendation-info").append(newCont);
 }
 
 var searchMovie = function(movie) {
@@ -468,7 +468,7 @@ var createFavoriteCards = function(data) {
     recomBtns.append(recomFav);
     newCont.append(recomTxt);
     newCont.append(recomBtns);
-    $("#movieSection").append(newCont);
+    $("#favorites-info").append(newCont);
 }
 
 var playTrailer = function (movieid) {
@@ -699,6 +699,17 @@ $("#prevPage-bottom").on("click", function(event){
         }
     }
 })
+
+/*Tab Navigation*/
+$(".nav-link").click( function() {
+    $(".nav-link").removeClass("active");
+});
+
+$('#myTab a').on('click', function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+/*End of Tab Navigation  */
 
 $("#x").on("click", function () {
     var modal = $("#trailerModal");
