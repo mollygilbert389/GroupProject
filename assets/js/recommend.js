@@ -540,14 +540,14 @@ database.ref("/users").on("value", function(data) {
 var nameCheck = function(name) {
     var isCorrect = true;
     for (var i = 0; i < name.length; i++) {
-        if (game.alpha.indexOf(name[i].toLowerCase()) < 0 ) {
+        if (alphabet.indexOf(name[i].toLowerCase()) < 0 ) {
             isCorrect = false;
         }
     }
-    if (chooseName.length < 1) {
+    if (name.length < 1) {
         isCorrect = false;
     }
-    else if (chooseName.length > 11) {
+    else if (name.length > 11) {
         isCorrect = false;
     }
     return isCorrect;
