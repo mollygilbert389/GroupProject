@@ -15,7 +15,6 @@ var auth = firebase.auth();
 var favmovies = [];
 var favtmdb = [];
 var recomObj = {};
-var ratedObj = {};
 var recommendArray= [];
 var recommendations = [];
 var searchResults = [];
@@ -33,56 +32,117 @@ var name = "";
 //Functions to genrate recommended movies based on favorited movies
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-//
-var getRecommendations = function(array) {
-    var idArray = [];
-    var promises = array.map( (id) => {
-        return new Promise(function(res) {
-            var IDurl = "https://api.themoviedb.org/3/find/" + String(id) + "?api_key="+tmdb_key+"&language=en-US&external_source=imdb_id"
-            var tmdbID = "";
-            $.ajax({
-                url: IDurl,
-                method: "GET"
-            }).done(function(data) {
-                tmdbID = data.movie_results[0].id;
-                idArray.push(String(tmdbID));
-                res(tmdbID)
-            })
-        })
-    })
-    Promise.all(promises).then(function(alldata) {
-        favtmdb = alldata;
-        getRecom(alldata);
-    })
-}
-
-var getRecom = function(array) {
-    var promises = array.map( (id) => {
-        return new Promise(function(res) {
-            var recurl = "https://api.themoviedb.org/3/movie/" + String(id)  +"/recommendations?api_key="+tmdb_key+"&language=en-US&page=1"
+var setRecomObject = function(movieid) {
+    var IDurl = "https://api.themoviedb.org/3/find/" + String(movieid) + "?api_key="+tmdb_key+"&language=en-US&external_source=imdb_id"
+    var tmdbID = "";
+    $.ajax({
+        url: IDurl,
+        method: "GET"
+    }).done(function(data) {
+        tmdbID = data.movie_results[0].id;
+        var recurl = "https://api.themoviedb.org/3/movie/" + String(tmdbID)  +"/recommendations?api_key="+tmdb_key+"&language=en-US&page=1"
+        $.ajax({
+            url: recurl,
+            method: "GET"
+        }).then(function(data) {
             var recommends = [];
-            $.ajax({
-                url: recurl,
-                method: "GET"
-            }).then(function(data) {
-                
-                for (var i = 0; i < data.results.length; i++) {
-                    var tempid = data.results[i].id
-                    recommends.push(tempid)
-                }        
-                recomObj[id] = recommends;
-                res(recomObj)
-            });
-        })
-    })
-    Promise.all(promises).then(function(alldata) {
-        sortObj(recomObj);
+            for (var i = 0; i < data.results.length; i++) {
+                var tempid = data.results[i].id
+                recommends.push(tempid)
+            }    
+            console.log(tmdbID, recommends)
+            var update = {};
+            update[userid+"/recommendations/" + tmdbID] = recommends;
+            database.ref("/users").update(update);
+        });
     })
 }
 
+var removeFavorite = function(movieid) {
+    var IDurl = "https://api.themoviedb.org/3/find/" + String(movieid) + "?api_key="+tmdb_key+"&language=en-US&external_source=imdb_id"
+    var tmdbID = "";
+    $.ajax({
+        url: IDurl,
+        method: "GET"
+    }).done(function(data) {
+        tmdbID = data.movie_results[0].id;
+        var update = {};
+        update[userid+"/recommendations/" + tmdbID] = null;
+        database.ref("/users").update(update);
+    })
+}
+
+//TMDB API call to convert the array of favorite imdb movie ids to tmdb movie ids
+// var getRecommendations = function(array) {
+//     var idArray = [];
+//     var promises = array.map( (id) => {
+//         return new Promise(function(res) {
+//             var IDurl = "https://api.themoviedb.org/3/find/" + String(id) + "?api_key="+tmdb_key+"&language=en-US&external_source=imdb_id"
+//             var tmdbID = "";
+//             $.ajax({
+//                 url: IDurl,
+//                 method: "GET"
+//             }).done(function(data) {
+//                 tmdbID = data.movie_results[0].id;
+//                 idArray.push(String(tmdbID));
+//                 res(tmdbID)
+//             })
+//         })
+//     })
+//     Promise.all(promises).then(function(alldata) {
+//         favtmdb = alldata;
+//         getRecom(alldata);
+//     })
+// }
+
+//Use list of tmdb movie ids to call another TMDB API that gives an array of recommended movies per movie title.
+// var getRecom = function(array) {
+//     var promises = array.map( (id) => {
+//         return new Promise(function(res) {
+//             var recurl = "https://api.themoviedb.org/3/movie/" + String(id)  +"/recommendations?api_key="+tmdb_key+"&language=en-US&page=1"
+//             var recommends = [];
+//             $.ajax({
+//                 url: recurl,
+//                 method: "GET"
+//             }).then(function(data) {
+                
+//                 for (var i = 0; i < data.results.length; i++) {
+//                     var tempid = data.results[i].id
+//                     recommends.push(tempid)
+//                 }        
+//                 recomObj[id] = recommends;
+//                 res(recomObj)
+//             });
+//         })
+//     })
+//     Promise.all(promises).then(function(alldata) {
+//         sortObj(recomObj);
+//     })
+// }
+
+var getRecommendations = function() {
+        if (loggedIn == true) {
+            var recommendedMovies = {};
+            database.ref("/users").once("value").then(function(data) {
+                recommendedMovies = data.val()[userid].recommendations
+                if(typeof(recommendedMovies) != "undefined") {
+                    sortObj(recommendedMovies);
+                } else{
+                    console.log("Sorry no favorites found");
+                }
+                })
+        }  else {
+
+        }
+}
+
+//This functions cycles through all arrays of recommended movies. Each movie is only added if it has not been rated and is not in the favorites array. 
+//Each movie is then sent to the get a rating from the getRated function. and saved in an object with its rating
+//The rated movie object is then sent to sortRatings to order the movies for highest rating to lowest and converted into an array
 var sortObj = function(myobject) {
     objKeys = Object.keys(myobject);
     var ratedMovies = [];
+    var ratedObj = {};
     for (var i = 0; i < objKeys.length; i++) {
         for (var j = 0; j < myobject[objKeys[i]].length; j++) {
             var movie = myobject[objKeys[i]][j];
@@ -98,6 +158,7 @@ var sortObj = function(myobject) {
     getIMDBids(recommendArray)
 }
 
+//This function gives a rating by counting the number of times the movie appears in each list
 var getRated = function(movieObj, movie) {
     objKeys = Object.keys(movieObj);
     rating = 0;
@@ -109,8 +170,10 @@ var getRated = function(movieObj, movie) {
     return rating;
 }
 
+//Sorts the rated movie object from highest rated movie to lowest and pushes them into and array
 var sortRatings = function(myobject) {
     var sortable = [];
+    recommendArray = [];
     for (var id in myobject) {
         sortable.push([id, myobject[id]]);
     }
@@ -123,9 +186,12 @@ var sortRatings = function(myobject) {
     }
 }
 
+
+//Uses a TMDB API to convert the TMDB movie ids into IMDB movie ids
 var getIMDBids = function(array) {
+    var movies = array.slice(0,99);
     recommendations = [];
-    var promises = array.map((id) => {
+    var promises = movies.map((id) => {
         return new Promise(function(res) { 
             var idurl = "https://api.themoviedb.org/3/movie/" + id + " ?api_key="+tmdb_key+"&language=en-US"
             var imdbID = "";
@@ -133,8 +199,8 @@ var getIMDBids = function(array) {
                 url: idurl,
                 method: "GET"
             }).then(function(data) {
-                imdbid = data.imdb_id;
-                res(imdbid)
+                imdbID = data.imdb_id;
+                res(imdbID)
             });
         })
     })
@@ -145,6 +211,7 @@ var getIMDBids = function(array) {
     })
 }
 
+//Using the IMDB movie titles to call the OMDB API to pull data objects on each movie
 var getResults = function(array) {
     page = 0;
     for (var i = 0; i < 10; i++) {
@@ -159,6 +226,7 @@ var getResults = function(array) {
     }
 }
 
+//Transforming the movie data objects into "cards" in the recommendation display area
 var createRecomCards = function(data) {
     var id = String(data.imdbID);
     var title = data.Title;
@@ -238,6 +306,8 @@ var createRecomCards = function(data) {
     newCont.append(recomBtns);
     $("#recommendation-info").append(newCont);
 }
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 //Functions to search movies and generate responses on the web page.
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -346,17 +416,27 @@ var createSearchCards = function(data) {
     }
     favimg.on("click", function(){
         var movieID =  $(this).attr("id");
+        var action = "";
         if (favmovies.indexOf(movieID) < 0) {
             favmovies.push(movieID);
             $(this).attr("src", "assets/images/star-active.png")
+            action = "add"
         } else {
             favmovies = favmovies.filter(movie=>movie!==movieID);
             $(this).attr("src", "assets/images/star-inactive.png")
+            action = "remove"
         }
         if (loggedIn == true) {
+            if (action == "add") {
+                setRecomObject(movieID);
+            } else {
+                removeFavorite(movieID);
+            }
+            
             var update = {};
             update[userid+"/favorites"] = favmovies;
             database.ref("/users").update(update);
+            
         }
     })
     trailerIMG = $("<img>").attr("src", "assets/images/trailer.png");
@@ -386,7 +466,87 @@ var createSearchCards = function(data) {
     newCont.append(recomBtns);
     $("#movieSection").append(newCont);
 }
+//////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//Functions to display Favorite movies
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+//Using the IMDB movie titles to call the OMDB API to pull data objects on each movie
+var getFavorites = function(array) {
+    var promises = array.map((id) => {
+        return new Promise(function(res) { 
+          var url1 = "https://www.omdbapi.com/?i=" + id + "&plot=short&apikey=6cf3f906";
+            $.ajax({
+                type: "GET",
+                url: url1,
+            }).then(function (data){
+                res(data)
+            })
+        })
+    })
+    Promise.all(promises).then(function(alldata) {
+        var movies = alldata.slice(0,10);
+        for (var i in movies) {
+            createFavoriteCards(movies[i]);
+        }
+    })
+}
+
+//Transforming the movie data objects into "cards" in the favorites display area
+var createFavoriteCards = function(data) {
+    var id = String(data.imdbID);
+    var title = data.Title;
+    var plot = data.Plot;
+    var year = data.Year;        
+    var titleTag = $("<h5>").html("<b>" + title + "</b> " + "<em>("+year+")</em>");
+    var plotTag = $("<p>").html("<b>Plot: </b>"+plot);
+    var newCont = $("<div>").addClass("FavCont");
+    var recomTxt = $("<div>").addClass("resultTxt");
+    var recomBtns = $("<div>").addClass("buttons");
+    var recomFav = $("<div>").addClass("star");
+    var favimg = $("<img>").attr("src", "assets/images/star-inactive.png");
+    favimg.attr("id", id);
+    if (favmovies.indexOf(id) >= 0) {
+        favimg.attr("src", "assets/images/star-active.png")
+    } else {
+        favimg.attr("src", "assets/images/star-inactive.png");
+    }
+    favimg.on("click", function(){
+        var movieID =  $(this).attr("id");
+        if (favmovies.indexOf(movieID) < 0) {
+            favmovies.push(movieID);
+            $(this).attr("src", "assets/images/star-active.png")
+            action = "add"
+        } else {
+            favmovies = favmovies.filter(movie=>movie!==movieID);
+            $(this).attr("src", "assets/images/star-inactive.png")
+            action = "remove"
+        }
+        if (loggedIn == true) {
+            if (action == "add") {
+                setRecomObject(movieID);
+            } else {
+                removeFavorite(movieID);
+            }
+            
+            var update = {};
+            update[userid+"/favorites"] = favmovies;
+            database.ref("/users").update(update);
+            
+        }
+    })
+    recomTxt.append(titleTag);
+    recomTxt.append(plotTag);
+    recomFav.append(favimg);
+    recomBtns.append(recomFav);
+    newCont.append(recomTxt);
+    newCont.append(recomBtns);
+    $("#favorites-info").append(newCont);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+//Function to turn display page of an area based which page you are viewing
 var turnPage = function(movies) {
     if (page <= movies.length && page >= 0) {
        var array = movies;
@@ -432,69 +592,11 @@ var turnPage = function(movies) {
     }
 }
 
+//////////////////////////////////////////////
+//Functions to create and play movie trailers
+/////////////////////////////////////////////
 
-var getFavorites = function(array) {
-    var promises = array.map((id) => {
-        return new Promise(function(res) { 
-          var url1 = "https://www.omdbapi.com/?i=" + id + "&plot=short&apikey=6cf3f906";
-            $.ajax({
-                type: "GET",
-                url: url1,
-            }).then(function (data){
-                res(data)
-            })
-        })
-    })
-    Promise.all(promises).then(function(alldata) {
-        var movies = alldata.slice(0,10);
-        for (var i in movies) {
-            createFavoriteCards(movies[i]);
-        }
-    })
-}
-
-var createFavoriteCards = function(data) {
-    var id = String(data.imdbID);
-    var title = data.Title;
-    var plot = data.Plot;
-    var year = data.Year;        
-    var titleTag = $("<h5>").html("<b>" + title + "</b> " + "<em>("+year+")</em>");
-    var plotTag = $("<p>").html("<b>Plot: </b>"+plot);
-    var newCont = $("<div>").addClass("FavCont");
-    var recomTxt = $("<div>").addClass("resultTxt");
-    var recomBtns = $("<div>").addClass("buttons");
-    var recomFav = $("<div>").addClass("star");
-    var favimg = $("<img>").attr("src", "assets/images/star-inactive.png");
-    favimg.attr("id", id);
-    if (favmovies.indexOf(id) >= 0) {
-        favimg.attr("src", "assets/images/star-active.png")
-    } else {
-        favimg.attr("src", "assets/images/star-inactive.png");
-    }
-    favimg.on("click", function(){
-        var movieID =  $(this).attr("id");
-        if (favmovies.indexOf(movieID) < 0) {
-            favmovies.push(movieID);
-            $(this).attr("src", "assets/images/star-active.png")
-        } else {
-            favmovies = favmovies.filter(movie=>movie!==movieID);
-            $(this).attr("src", "assets/images/star-inactive.png")
-        }
-        if (loggedIn == true) {
-            var update = {};
-            update[userid+"/favorites"] = favmovies;
-            database.ref("/users").update(update);
-        }
-    })
-    recomTxt.append(titleTag);
-    recomTxt.append(plotTag);
-    recomFav.append(favimg);
-    recomBtns.append(recomFav);
-    newCont.append(recomTxt);
-    newCont.append(recomBtns);
-    $("#favorites-info").append(newCont);
-}
-
+//Use 2 TMDB API Calls to convert IMDB movie id to TMDB ID and to use that TMDB ID to get a Youtube video ID for the movie trailer
 var playTrailer = function (movieid) {
     event.preventDefault();
     $("#trailerModal").attr("style", "display: block")
@@ -515,6 +617,7 @@ var playTrailer = function (movieid) {
     })
 }
 
+//Uses to Youtube movie trailer ID and creates an iframe with the youtube source for the trailer
 var makevid = function(id) {
     var newFrame = $("<iframe>");
     newFrame.addClass("trailerSize")
@@ -525,7 +628,13 @@ var makevid = function(id) {
     trailer.empty()
     trailer.append(newFrame);
 }
+////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
+//Functions for a successful user account login and user account creation
+///////////////////////////////////////////////////////////////////////////
+
+//Upon sucessful account creation using the Firebase function, modal is closed and user datebase is created using current favorite movies.
 var createSucess = function(user) {
     $("#signUpModal").css("display", "none");
     $(".modal-backdrop")[0].remove();
@@ -537,6 +646,7 @@ var createSucess = function(user) {
     database.ref("/users").update(update);
 }
 
+//Upon Successful account login using the Firebase function, modal is closed and cleared, and favorite movies are retrieved from the database.
 var loginSuccess = function(user) {
     $("#email").val("")
     $("#password").val("")
@@ -559,6 +669,8 @@ var loginSuccess = function(user) {
         }
     })
 }
+//////////////////////////////////////////////////////////////////////
+
 
 database.ref("/users").on("value", function(data) {
     allUsers = Object.values(data.val());
@@ -597,6 +709,7 @@ var checkEmail = function(email) {
 
 
 $(document).ready(function() {
+    //logs out any signed in user when page is first loaded
     auth.signOut();
    
     $("#submit").on("click", function(event){
