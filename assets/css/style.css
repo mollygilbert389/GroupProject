@@ -360,3 +360,18 @@ height:200px;
 
 
 /* End of Navbar Media Query */
+
+/* About page images styles */
+.about-text{
+    color: rgb(214, 214, 214);
+}
+
+.joelimage {
+    height:200px;
+    width: 200px;
+    background-image: url('../images/unknown_sp.jpg');
+}
+
+.joelimage:hover {
+    background-image: url('../images/unknown_normal.jpg') no-repeat;
+}
