@@ -1,7 +1,3 @@
-//movie by imdb ID: "https://api.themoviedb.org/3/find/IDHERE?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&external_source=imdb_id"
-//movie query: "https://api.themoviedb.org/3/search/movie?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&query=seatchtexthere&page=1&include_adult=false"
-//person movie credits: "https://api.themoviedb.org/3/person/{person_id}/movie_credits?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US"
-//movie database link: https://developers.themoviedb.org/3/movies/get-movie-details
 
 // Initialize Firebase
 var config = {
@@ -15,8 +11,8 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();    
 var auth = firebase.auth();
+//Declaring all of the global functions to make the site work
 var favmovies = [];
-// Gladitator, Die Hard, Deadpool, Braveheart, Iron Man, Gifted
 var favtmdb = [];
 var recomObj = {};
 var ratedObj = {};
@@ -33,6 +29,11 @@ var userid = 0;
 var movieobj = {};
 var name = "";
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//Functions to genrate recommended movies based on favorited movies
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+//
 var getRecommendations = function(array) {
     var idArray = [];
     var promises = array.map( (id) => {
@@ -237,9 +238,13 @@ var createRecomCards = function(data) {
     newCont.append(recomBtns);
     $("#recommendation-info").append(newCont);
 }
+//////////////////////////////////////////////////////////////////////////////////////////////
+//Functions to search movies and generate responses on the web page.
+//////////////////////////////////////////////////////////////////////////////////////////////
 
+//CAll TMDB API to get an array of seach results
 var searchMovie = function(movie) {
-    var url = "https://api.themoviedb.org/3/search/movie?api_key=c5e11b07aed33fed93509604abbe325f&language=en-US&query="+movie+"&page=1&include_adult=false";
+    var url = "https://api.themoviedb.org/3/search/movie?api_key="+ tmdb_key+"&language=en-US&query="+movie+"&page=1&include_adult=false";
     var movies = []
     page = 0;
     $.ajax({
@@ -256,6 +261,7 @@ var searchMovie = function(movie) {
     })
 }
 
+//Converting the array of search results to imdb movie ids
 var getIMDBids2 = function(array) {
     var promises = array.map((id) => {
         return new Promise(function(res) { 
@@ -277,6 +283,7 @@ var getIMDBids2 = function(array) {
     })
 }
 
+//Using the IMDB movie titles to call the OMDB API to pull data objects on each movie
 var displaySearch = function(array) {
     var promises = array.map((id) => {
         return new Promise(function(res) { 
@@ -296,6 +303,7 @@ var displaySearch = function(array) {
     })
 }
 
+//Transforming the movie data objects into "cards" in the search display area
 var createSearchCards = function(data) {
     var id = String(data.imdbID);
     var title = data.Title;
@@ -325,6 +333,10 @@ var createSearchCards = function(data) {
     var recomTxt = $("<div>").addClass("resultTxt");
     var recomBtns = $("<div>").addClass("buttons");
     var recomFav = $("<div>").addClass("star");
+    var recomRT = $("<div>").addClass("rt-link");
+    var recomIMBD = $("<div>").addClass("imdb-link");
+    var IMBDlink = $("<a>").attr("href", "https://www.imdb.com/title/"+id)
+    IMBDlink.attr("target", "_blank")
     var favimg = $("<img>").attr("src", "assets/images/star-inactive.png");
     favimg.attr("id", id);
     if (favmovies.indexOf(id) >= 0) {
@@ -347,6 +359,13 @@ var createSearchCards = function(data) {
             database.ref("/users").update(update);
         }
     })
+    trailerIMG = $("<img>").attr("src", "assets/images/trailer.png");
+    trailerIMG.attr("id-holder", id);
+    trailerIMG.on("click", function(){
+        var movie =  $(this).attr("id-holder");
+        playTrailer(movie);
+    });
+    IMDBimg = $("<img>").attr("src", "assets/images/IMDB.svg");
     recomIMG.append(posterIMG)
     recomTxt.append(titleTag);
     recomTxt.append(ratingTag);
@@ -356,7 +375,12 @@ var createSearchCards = function(data) {
     recomTxt.append(writerTag);
     recomTxt.append(genreTag);
     recomFav.append(favimg);
+    recomRT.append(trailerIMG);
+    IMBDlink.append(IMDBimg);
+    recomIMBD.append(IMBDlink);
     recomBtns.append(recomFav);
+    recomBtns.append(recomRT);
+    recomBtns.append(recomIMBD);
     newCont.append(recomIMG);
     newCont.append(recomTxt);
     newCont.append(recomBtns);
