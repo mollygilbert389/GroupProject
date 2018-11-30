@@ -174,7 +174,7 @@ height:200px;
 }
 
 .RecomCont {
-    height: 330px;
+    height: auto;
     border: 4px solid rgba(53, 51, 51, 0.6);
 
     text-align: left;
@@ -188,6 +188,7 @@ height:200px;
 
 .FavCont {
     min-height: 140px;
+    height: auto;
     border: 4px solid rgba(53, 51, 51, 0.6);
     border-radius: 9px;
     text-align: left;
@@ -318,24 +319,51 @@ height:200px;
 }
 
 
-/*Navbar Media Query */
-@media (max-width: 768px){
+@media (max-width: 991px){
+
     .navbar-collapse-properties {
         background-color: rgb(46, 45, 45);
-        margin-left: 70%;
-        margin-top: -30px;
+        margin-left: 28%;
+        margin-top: -50px;
         max-height: 200px;
-        width: 130px;
+        width: 100px;
         border-radius: 5px;
         border: 2px;
         border-color: #a09f9f;
         box-shadow: 2px 2px rgb(181, 189, 187);
         margin-right: 10px;
+    
+    }
+
+}
+
+
+/*Navbar Media Query */
+@media (max-width: 768px){
+    .navbar-collapse-properties {
+        background-color: rgb(46, 45, 45);
+        margin-left: 28%;
+        margin-top: -50px;
+        max-height: 200px;
+        width: 100px;
+        border-radius: 5px;
+        border: 2px;
+        border-color: #a09f9f;
+        box-shadow: 2px 2px rgb(181, 189, 187);
+        margin-right: 10px;
+    
     }
     
        .menu-item {
             margin-right: 20px;
          }
+
+         .logo{
+            max-width: 200px;
+            max-height: 141px;
+          
+        }
+
     }
 
 
@@ -343,19 +371,54 @@ height:200px;
 @media (max-width: 640px) {
 .navbar-collapse-properties {
     background-color: rgb(46, 45, 45);
-    margin-left: 50%;
+    margin-left: 19%;
     margin-top: -30px;
     max-height: 200px;
-    width: 130px;
+    width: 100px;
     border-radius: 5px;
-    border: 1px;
+    border: 2px;
     border-color: #a09f9f;
     box-shadow: 2px 2px rgb(181, 189, 187);
     margin-right: 10px;
+
 }
 .menu-item {
     margin-right: 20px;
- }
+}
+.logo{
+    max-width: 104px;
+    max-height: 141px;
+  
+}
+.recomImg{
+height:200px;
+width: 100px;
+}
+
+}
+
+@media (max-width: 453px){
+.search-container{
+    max-width: 70%;
+    margin-left: 10px;
+padding-top: 145px;
+
+}
+.navbar-collapse-properties {
+    background-color: rgb(46, 45, 45);
+    margin-left: 70%;
+    margin-right: 20%;
+    margin-top: -230px;
+    max-height: 200px;
+    width: 100px;
+    border-radius: 5px;
+    border: 2px;
+    border-color: #a09f9f;
+    box-shadow: 2px 2px rgb(181, 189, 187);
+    /* margin-right: 10px; */
+    /* top: 200px; */
+}
+
 }
 
 
