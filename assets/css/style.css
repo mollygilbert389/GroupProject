@@ -314,7 +314,13 @@ height:200px;
    margin-bottom: 5px;
 }
 
-
+#pageHowTo {
+    color: white;
+    text-align: center;
+    margin-left: 20%;
+    margin-right: 20%;
+    font-family: 'Roboto', sans-serif;
+}
 
 @media (max-width: 991px){
 
