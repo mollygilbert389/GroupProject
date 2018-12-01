@@ -33,6 +33,11 @@ var localRecommendations = {};
 //Functions to genrate recommended movies based on favorited movies
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+//Function takes an incoming movieID and runs it through TMDB APIS
+//The first API converts the IMDB id to a TMDB id
+//The second API generates an array of recommneded movies
+//Then if the user is logged in the tmdb id of the movie and the array are pushed to the database
+//If the user is not logged the tmdb id and array are added to a local object
 var setRecomObject = function(movieid) {
     var IDurl = "https://api.themoviedb.org/3/find/" + String(movieid) + "?api_key="+tmdb_key+"&language=en-US&external_source=imdb_id"
     var tmdbID = "";
@@ -618,6 +623,7 @@ var createSucess = function(user) {
     update[userid+"/favorites"] = favmovies;
     update[userid+"/name"] = name;
     update[userid+"/email"] = user.user.email;
+    update[userid+"/recommendations"] = localRecommendations;
     database.ref("/users").update(update);
 }
 
@@ -886,7 +892,6 @@ $(document).ready(function() {
         $("#loginButton").hide();
         $("#signupButton").hide();
         $("#logoutButton").attr('style','display: block');
-
         var email = $("#email").val().trim();
         var password = $("#password").val().trim();
         firebase.auth().signInWithEmailAndPassword(email, password)
@@ -903,7 +908,6 @@ $(document).ready(function() {
         $("#loginButton").hide();
         $("#signupButton").hide();
         $("#logoutButton").attr('style','display: block');
-
         var email = $("#email1").val().trim();
         var password = $("#password1").val().trim();
         firebase.auth().signInWithEmailAndPassword(email, password)
@@ -916,32 +920,16 @@ $(document).ready(function() {
                 });
         });
 
-   
-$("#logoutButton").on("click", function(){
-  
-    firebase.auth().signOut().then(function() {
-        // Sign- 
-         $("#loginButton").show();
-    $("#signupButton").show();
-    $("#logoutButton").attr('style','display: none');
-      }, function(error) {
-        // An error happened.
-      });
-})
-
-    $("#sing-in2").on( "click", function() {
-        event.preventDefault();
-        var email = $("#email1").val().trim();
-        var password = $("#password1").val().trim();
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(user => loginSuccess(user))
-            .catch(function(error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                $("#errormessage1").text(errorMessage)
-                $("#password1").val("")
-            });
-    });
+        $("#logoutButton").on("click", function(){
+        firebase.auth().signOut().then(function() {
+            // Sign- 
+            $("#loginButton").show();
+        $("#signupButton").show();
+        $("#logoutButton").attr('style','display: none');
+        }, function(error) {
+            // An error happened.
+        });
+    })
 
     $("#signout").on("click", function(){
         firebase.auth().signOut().then(function() {
@@ -950,4 +938,4 @@ $("#logoutButton").on("click", function(){
             // An error happened.
         });
         })
-});
+    });
