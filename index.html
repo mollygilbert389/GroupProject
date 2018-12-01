@@ -18,8 +18,7 @@
     crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
     crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
@@ -30,86 +29,88 @@
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button> -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-       <!-- Search Button -->
-       <div class="row search-container text-center">
-          <div class="input-group mb-3  ">
-            <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary" type="button" id='submit'>Search</button>
-            </div>
-            <input id="search-movie" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-          </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Search Button -->
+    <div class="row search-container text-center">
+      <div class="input-group mb-3  ">
+        <div class="input-group-prepend">
+          <button class="btn btn-outline-secondary" type="button" id='submit'>Search</button>
         </div>
-    
-        <!-- End of Search Button -->
+        <input id="search-movie" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+      </div>
+    </div>
+
+    <!-- End of Search Button -->
 
 
     <div class="collapse navbar-collapse justify-content-end " id="navbarSupportedContent">
-   
+
       <ul class="navbar-nav navbar-collapse-properties align-items-end">
 
         <li class="nav-item active">
-          <a class="nav-link menu-item" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link menu-item" href="index.html">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link menu-item" href="#">About</a>
+          <a class="nav-link menu-item" href="about.html">About</a>
         </li>
-      <!-- Sign Up Button -->
+        <!-- Sign Up Button -->
 
-      <li><a id="signupButton" class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal"><i class="fas fa-sign-in-alt"></i>
-        Sign Up</a></li>
+        <li><a id="signupButton" class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal"><i class="fas fa-sign-in-alt"></i>
+            Sign Up</a></li>
 
 
-    <!-- Sign In Button -->
-    <li><a id="loginButton" class="nav-link" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i> Login</a></li>
-    <li><a id="logoutButton" style="display: none" class="nav-link" href="#" ><i class="fas fa-user"></i> LogOut</a></li>
-
+        <!-- Sign In Button -->
+        <li><a id="loginButton" class="nav-link" href="#" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user"></i>
+            Login</a></li>
+        <li><a id="logoutButton" style="display: none" class="nav-link" href="#"><i class="fas fa-user"></i> LogOut</a></li>
       </ul>
 
 
     </div>
-  </nav>  
+  </nav>
 
-<!-- Sign Up Modal -->
 
-<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle"
-aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="signUpModalTitle">Modal title</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
+
+  <!-- Sign Up Modal -->
+
+  <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="signUpModalTitle">Create an Account</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
           <!-- Form -->
           <div class="login-page">
-              <div class="form">
-                <form class="reg-form">
-                  <input type="text" id='name4' placeholder="name" />
-                  <input type="password" id='password4' placeholder="password" />
-                  <input type="text" id='email4' placeholder="email address" />
-                  <div class="error">
-                    <span id="errormessage4"></span>
-                  </div>
-                  <button id="register">create</button>
-                  <p class="message">Already registered? <a id='sign-in3' href="#">Sign In</a></p>
-                </form>
-                <form class="log-form">
-                  <input type="text" id='email1' placeholder="email" />
-                  <input type="password" id='password1' placeholder="password" />
-                  <div class="error">
-                    <span id="errormessage1"></span>
-                  </div>
-                  <button id="sign-in2">login</button>
-                  <p class="message">Not registered? <a href="#">Create an account</a></p>
-                </form>
-              </div>
+            <div class="form">
+              <form class="reg-form">
+                <input type="text" id='name4' placeholder="name" />
+                <input type="password" id='password4' placeholder="password" />
+                <input type="text" id='email4' placeholder="email address" />
+                <div class="error">
+                  <span id="errormessage4"></span>
+                </div>
+                <button id="register">create</button>
+                <p class="message">Already registered? <a id='sign-in3' href="#">Sign In</a></p>
+              </form>
+              <form class="log-form">
+                <input type="text" id='email1' placeholder="email" />
+                <input type="password" id='password1' placeholder="password" />
+                <div class="error">
+                  <span id="errormessage1"></span>
+                </div>
+                <button id="sign-in2">login</button>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+              </form>
             </div>
-            <!-- End of Form -->
+          </div>
+          <!-- End of Form -->
         </div>
 
 
@@ -119,63 +120,58 @@ aria-hidden="true">
   <!-- End Sign Up Modal -->
 
 
-    <!-- Sign In Modal -->
 
-    <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalTitle"
-    aria-hidden="true">
+  <!-- Sign In Modal -->
+
+  <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h5 class="modal-title" id="signInModalTitle">Modal title</h5>
+          <h5 class="modal-title" id="signInModalTitle">Login to your Account</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-         <!-- Form -->
-            <div class="login-page">
-                <div class="form">
-                  <form class="register-form">
-                    <input type="text" id='name3' placeholder="name" />
-                    <input type="password" id='password2' placeholder="password" />
-                    <input type="email" id='email2' placeholder="email address" />
-                    <div class="error">
-                      <span id="errormessage2"></span>
-                    </div>
-                    <button id="register2">create</button>
-                    <p class="message">Already registered? <a href="#">Sign In</a></p>
-                  </form>
-                  <form class="login-form">
-                    <input type="email" id='email' placeholder="email" />
-                    <input type="password" id='password' placeholder="password" />
-                    <div class="error">
-                      <span id="errormessage" ></span>
-                    </div>
-                    <button id="sign-in">login</button>
-                    <p class="message">Not registered? <a href="#">Create an account</a></p>
-                  </form>
+          <!-- Form -->
+          <div class="login-page">
+            <div class="form">
+              <form class="register-form">
+                <input type="text" id='name3' placeholder="name" />
+                <input type="password" id='password2' placeholder="password" />
+                <input type="email" id='email2' placeholder="email address" />
+                <div class="error">
+                  <span id="errormessage2"></span>
                 </div>
-              </div>
-              
+                <button id="register2">create</button>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+              </form>
+              <form class="login-form">
+                <input type="email" id='email' placeholder="email" />
+                <input type="password" id='password' placeholder="password" />
+                <div class="error">
+                  <span id="errormessage"></span>
+                </div>
+                <button id="sign-in">login</button>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+              </form>
+            </div>
+          </div>
+
 
         </div>
 
 
       </div>
     </div>
-    
+
 
   </div>
 
 
-<!-- End Sign In  Modal -->
+  <!-- End Sign In  Modal -->
 
-     
-
-        
-
-      
   <br>
   <br>
   <br>
@@ -185,12 +181,12 @@ aria-hidden="true">
 
   <!--Movie Trailer Modal-->
   <div id="trailerModal" class="modal">
-      <div class="trailerPop">
-          <div id="trailer">
-              <iframe id="player" width="640" height="390" src="#"></iframe>
-          </div>
-        <button id="x">x</button>
+    <div class="trailerPop">
+      <div id="trailer">
+        <iframe id="player" width="640" height="390" src="#"></iframe>
       </div>
+      <button id="x">x</button>
+    </div>
   </div>
   <!--end of Movie Trailer Modal-->
 
@@ -199,8 +195,8 @@ aria-hidden="true">
     <!-- Tab Tests -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item ">
-        <a class="nav-link tab-link active " id="results-tab" data-toggle="tab" href="#results-tab-id" role="tab" aria-controls="results"
-          aria-selected="true">Results</a>
+        <a class="nav-link tab-link active " id="results-tab" data-toggle="tab" href="#results-tab-id" role="tab"
+          aria-controls="results" aria-selected="true">Results</a>
       </li>
       <li class="nav-item ">
         <a class="nav-link tab-link" id="favorites" data-toggle="tab" href="#favorites-tab-id" role="tab" aria-controls="profile"
@@ -267,32 +263,6 @@ aria-hidden="true">
       </div>
     </div>
     <!-- End of Tab Tests -->
-
-    <!-- menu of searches-->
-    <!-- <div class="container">
-
-
-     End menu of searches -->
-    <!-- <div class="row">
-      <div class="col-12 list-container">
-        <div class="card">
-          <h5 class="card-header" id="search-title">List of Movies</h5>
-          <div class="card-body">
-            <div id="seachbtns" class="btn-holder" role="group">
-              <button type="button" id="prevPage" class="btn btn-outline-primary">
-                <<</button> <button type="button" id="nextPage" class="btn btn-outline-primary">>>
-              </button>
-            </div>
-            <div id="movieSection"></div>
-            <div id="seachbtns-bottom" class="btn-holder" role="group">
-              <button type="button" id="prevPage-bottom" class="btn btn-outline-primary">
-                <<</button> <button type="button" id="nextPage-bottom" class="btn btn-outline-primary">>>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
   </div>
 </body>

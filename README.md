@@ -1,2 +1,0 @@
-# GroupProject
-Initial repository
