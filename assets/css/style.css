@@ -405,14 +405,14 @@ width: 100px;
 .search-container{
     max-width: 70%;
     margin-left: 10px;
-padding-top: 145px;
+padding-top: 80px;
 
 }
 .navbar-collapse-properties {
     background-color: rgb(46, 45, 45);
-    margin-left: 70%;
+    margin-left: 75%;
     margin-right: 20%;
-    margin-top: -230px;
+    margin-top: -165px;
     max-height: 200px;
     width: 100px;
     border-radius: 5px;
