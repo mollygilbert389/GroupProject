@@ -1,4 +1,5 @@
 
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyBVVr8A-0xEcW4J3FK0sGQdLynUGIUOhKY",
@@ -33,7 +34,6 @@ var name = "";
 //Functions to genrate recommended movies based on favorited movies
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-//
 var getRecommendations = function(array) {
     var idArray = [];
     var promises = array.map( (id) => {
@@ -238,6 +238,7 @@ var createRecomCards = function(data) {
     newCont.append(recomBtns);
     $("#recommendation-info").append(newCont);
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 //Functions to search movies and generate responses on the web page.
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,6 +262,7 @@ var searchMovie = function(movie) {
     })
 }
 
+
 //Converting the array of search results to imdb movie ids
 var getIMDBids2 = function(array) {
     var promises = array.map((id) => {
@@ -283,6 +285,7 @@ var getIMDBids2 = function(array) {
     })
 }
 
+
 //Using the IMDB movie titles to call the OMDB API to pull data objects on each movie
 var displaySearch = function(array) {
     var promises = array.map((id) => {
@@ -302,6 +305,7 @@ var displaySearch = function(array) {
         }
     })
 }
+
 
 //Transforming the movie data objects into "cards" in the search display area
 var createSearchCards = function(data) {
@@ -359,6 +363,7 @@ var createSearchCards = function(data) {
             database.ref("/users").update(update);
         }
     })
+
     trailerIMG = $("<img>").attr("src", "assets/images/trailer.png");
     trailerIMG.attr("id-holder", id);
     trailerIMG.on("click", function(){
@@ -616,7 +621,9 @@ $(document).ready(function() {
         event.preventDefault();
         if( favmovies.length > 0) {
             $("#movieSection").empty()
+            $("#recommendation-info").empty();
             $("#recommendSection").empty();
+            $("#favorites-info").empty()
             $("#seachbtns").attr("style","display:block")
             $("#seachbtns-bottom").attr("style","display:block")
             $("#search-title").text("Recommendations")
@@ -629,7 +636,9 @@ $(document).ready(function() {
     $("#favorites").on("click", function(event){
         event.preventDefault();
         $("#movieSection").empty()
+        $("#recommendation-info").empty();
         $("#recommendSection").empty();
+        $("#favorites-info").empty()
         $("#seachbtns").attr("style","display:block")
         $("#seachbtns-bottom").attr("style","display:block")
         $("#search-title").text("Favorites")
