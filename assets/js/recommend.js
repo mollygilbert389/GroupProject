@@ -534,7 +534,6 @@ var turnPage = function(movies) {
     if (page <= movies.length && page >= 0) {
        var array = movies;
         if (movies.length - page < 10){
-            console.log("half page")
             for (var i = page; i < array.length; i++) {
                 var movieid = array[i]
                 if (movieid != null && movieid.length > 0) {
@@ -554,7 +553,6 @@ var turnPage = function(movies) {
                 }
             }  
         } else if (movies.length - page > 0 ) {
-            console.log("full page")
             for (var i = page; i < page+9; i++) {
                 var movieid = array[i]
                 if (movieid != null && movieid.length > 0) {
@@ -707,6 +705,12 @@ $(document).ready(function() {
         $("#search-title").text("Search Results");
         page = 0;
         searchMovie(movie);
+    })
+
+    $("#results-tab").on("click", function(event){
+        event.preventDefault();
+        searchType = "search";
+        $("#search-title").text("Search Results");
     })
 
     $("#recommendations").on("click", function(event){
