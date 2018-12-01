@@ -316,9 +316,13 @@ height:200px;
 #pageHowTo {
     color: white;
     text-align: center;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 2%;
     font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    background-color: rgb(29, 28, 28, 0.5);
+    border-radius: 8px;
 }
 
 @media (max-width: 991px){
@@ -434,13 +438,4 @@ padding-top: 80px;
     color: rgb(214, 214, 214);
 }
 
-.joelimage {
-    height:200px;
-    width: 200px;
-    background-image: url('../images/unknown_sp.jpg');
-}
-
-.joelimage:hover {
-    background-image: url('../images/unknown_normal.jpg') no-repeat;
-}
 
