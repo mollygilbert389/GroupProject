@@ -700,7 +700,6 @@ $(document).ready(function() {
     $("#submit").on("click", function(event){
         event.preventDefault();
         $("#movieSection").empty()
-        $("#recommendSection").empty();
         $("#seachbtns").attr("style","display:block")
         $("#seachbtns-bottom").attr("style","display:block")
         var movie = $("#search-movie").val();
@@ -713,9 +712,7 @@ $(document).ready(function() {
     $("#recommendations").on("click", function(event){
         event.preventDefault();
         if( favmovies.length > 0) {
-            $("#movieSection").empty()
             $("#recommendation-info").empty();
-            $("#recommendSection").empty();
             $("#favorites-info").empty()
             $("#seachbtns-recom").attr("style","display:block")
             $("#seachbtns-bottom-recom").attr("style","display:block")
@@ -728,9 +725,7 @@ $(document).ready(function() {
 
     $("#favorites").on("click", function(event){
         event.preventDefault();
-        $("#movieSection").empty()
         $("#recommendation-info").empty();
-        $("#recommendSection").empty();
         $("#favorites-info").empty()
         $("#seachbtns-fav").attr("style","display:block")
         $("#seachbtns-bottom-fav").attr("style","display:block")
