@@ -1,0 +1,361 @@
+body {
+    background-image: url("../images/bgpattern.png");
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+    
+}
+
+
+
+.navigation{
+    background-color: rgb(46, 46, 46);
+    color:white;
+    height: 135px;
+}
+.logo{
+    max-width: 214px;
+    max-height: 141px;
+  
+}
+
+
+.search-container {
+    max-width: 50%;
+    width: 400px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+    padding-top: 30px;
+
+   
+}
+
+.tab-link{
+    color: #C22026;
+    background-color: rgba(36, 34, 34, 0.3);
+
+}
+.tab-link:hover { 
+    color: rgb(255, 255, 255);
+    background-color: rgb(167, 142, 2);
+}
+
+.nav-tabs .nav-link {
+    
+    border: 1px solid rgba(136, 115, 115, 0.5);
+}
+
+.nav-tabs {
+    border-bottom: 1px solid rgb(194, 32, 38, 0.5);
+}
+
+.nav-tabs .nav-link.active {
+    color: #ffffff;
+    background-color: rgb(194, 32, 38, 0.8);
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+/*Login Style */
+
+
+
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #C22026;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #C22026;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #C22026;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+
+.form .log-form {
+    display: none;
+  }
+
+
+/*End of Login Style */
+
+
+.card{
+margin:10px;
+width: 100%;
+text-align: center;
+}
+p{
+    margin-bottom:0px;
+}
+.pic{
+height:200px;
+
+}
+.text{
+    height: 100%;
+    display: inline-block;
+    width: 65%;
+}
+.poster{
+    height: 100%;
+    text-align: center;
+    float: left;
+    width:15%;
+}
+
+
+
+.recommendations-container{
+    margin-top: 10px;
+    margin-bottom: 10px;   
+}
+
+.where-container{
+    margin-top: 10px;
+    margin-bottom: 10px;   
+}
+
+
+
+
+#seachbtns, #seachbtns-bottom {
+    display: none;
+}
+
+#recombtns {
+    display:show;
+}
+
+#movieSection, #recommendSection {
+    margin-top: 10px;
+}
+
+.RecomCont {
+    height: 330px;
+    border: 4px solid rgba(53, 51, 51, 0.6);
+
+    text-align: left;
+
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255,0.8);
+    border-radius: 9px;
+    overflow:auto;
+
+}
+
+.FavCont {
+    min-height: 140px;
+    border: 4px solid rgba(53, 51, 51, 0.6);
+    border-radius: 9px;
+    text-align: left;
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255,0.8);
+    padding-bottom: 15px;
+    overflow:auto;
+
+}
+
+.RIMG, .resultTxt {
+    display: inline-block;
+    height: 100%;
+}
+
+.RIMG {
+    float: left;
+}
+
+.resultTxt {
+    width: 50%;
+    text-align: Left;
+    float:left;
+    margin-left: 3%;
+    margin-top: 10px;
+
+}
+
+.recomImg{
+    height: 100%;
+    width: 200px;
+}
+
+.resultTxt p {
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.buttons {
+    width: 15%;
+    height: 100%;
+    float: right;
+    margin-right: 15px;
+}
+.rt-link{
+    height: 50px;
+    width: 50px;
+    margin: 20px auto;
+    cursor: pointer;
+}
+.rt-link img {
+    height: 50px;
+    margin: 0 auto;
+}
+
+.imdb-link{
+    height: 40px;
+    width: 83px; 
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+.imdb-link img{
+    height: 40px;
+    margin: 20px auto;
+}
+
+.star {
+    height: 50px;
+    width: 50px;
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+.star img{
+    height: 50px;
+
+}
+
+
+/* Modal Trailer*/
+
+#trailerModal {
+   display: none;
+   position: fixed;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   overflow: auto;
+}
+
+.trailerPop {
+   height: 70%;
+   display: block;
+   background-color: black;
+   margin: 3% auto;
+   margin-top:0px;
+   margin-bottom:0px;
+   top:20px;
+   width: 65%;
+   text-align: center;
+   position: relative;
+   border-radius: 15px;
+   padding: 5%;
+   }
+
+#x {
+   position: absolute;
+   border-radius: 100%;
+   height: 24px;
+   width: 24px;
+   background: #242222c0;
+   color: white;
+   top: -10px;
+   right: -10px;
+   line-height: 55%;
+}
+
+.error{
+   font-size: 12px;
+   font-weight: bold;
+   color: red;
+   text-align: left;
+   width: 100%;
+   margin-bottom: 5px;
+}
+
+
+/*Navbar Media Query */
+@media (max-width: 768px){
+    .navbar-collapse-properties {
+        background-color: rgb(46, 45, 45);
+        margin-left: 70%;
+        margin-top: -30px;
+        max-height: 200px;
+        width: 130px;
+        border-radius: 5px;
+        border: 2px;
+        border-color: #a09f9f;
+        box-shadow: 2px 2px rgb(181, 189, 187);
+        margin-right: 10px;
+    }
+    
+       .menu-item {
+            margin-right: 20px;
+         }
+    }
+
+
+
+@media (max-width: 640px) {
+.navbar-collapse-properties {
+    background-color: rgb(46, 45, 45);
+    margin-left: 50%;
+    margin-top: -30px;
+    max-height: 200px;
+    width: 130px;
+    border-radius: 5px;
+    border: 1px;
+    border-color: #a09f9f;
+    box-shadow: 2px 2px rgb(181, 189, 187);
+    margin-right: 10px;
+}
+.menu-item {
+    margin-right: 20px;
+ }
+}
+
+
+/* End of Navbar Media Query */
