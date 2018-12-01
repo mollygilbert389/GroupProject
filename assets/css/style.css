@@ -271,44 +271,39 @@ height:200px;
 /* Modal Trailer*/
 
 #trailerModal {
-   display: none;
-   position: fixed;
-   left: 0;
-   top: 0;
-   width: 100%;
-   height: 100%;
-   overflow: auto;
-}
-
-.trailerPop {
-   height: 70%;
-   display: block;
-   background-color: black;
-   margin: 3% auto;
-   margin-top:0px;
-   margin-bottom:0px;
-   top:20px;
-   width: 65%;
-   text-align: center;
-   position: relative;
-   border-radius: 15px;
-   padding: 5%;
-   }
-
-#x {
-   position: absolute;
-   border-radius: 100%;
-   height: 24px;
-   width: 24px;
-   background: #242222c0;
-   color: white;
-   top: -10px;
-   right: -10px;
-   line-height: 55%;
-}
-
-
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(5, 0, 0, 0.904);
+ }
+ 
+ .trailerPop {
+    display: block;
+    margin: 3% auto;
+    margin-top:0px;
+    margin-bottom:0px;
+    top:20px;
+    width: 65%;
+    text-align: center;
+    position: relative;
+    border-radius: 15px;
+    padding: 5%;
+    }
+ 
+ #x {
+    border-radius: 8px;
+    height: 24px;
+    width: 55px;
+    background: #242222c0;
+    color: white;
+ }
+ 
  /*end modal*/
+
 .error{
    font-size: 12px;
    font-weight: bold;
