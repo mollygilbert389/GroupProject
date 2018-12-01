@@ -438,13 +438,4 @@ padding-top: 80px;
     color: rgb(214, 214, 214);
 }
 
-.joelimage {
-    height:200px;
-    width: 200px;
-    background-image: url('../images/unknown_sp.jpg');
-}
-
-.joelimage:hover {
-    background-image: url('../images/unknown_normal.jpg') no-repeat;
-}
 
