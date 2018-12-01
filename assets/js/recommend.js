@@ -1,5 +1,3 @@
-
-
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyBVVr8A-0xEcW4J3FK0sGQdLynUGIUOhKY",
@@ -12,23 +10,20 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();    
 var auth = firebase.auth();
-//Declaring all of the global functions to make the site work
-var favmovies = [];
-var favtmdb = [];
-var recomObj = {};
-var recommendArray= [];
-var recommendations = [];
-var searchResults = [];
-var recommends = [];
 var tmdb_key = "c5e11b07aed33fed93509604abbe325f";
 var omdb_key = "900ac6b6"
-var page = 0;
+//Declaring all of the global functions to make the site work
+var favmovies = [];
+var recomObj = {};
+var recommendations = [];
+var searchResults = [];
+var localRecommendations = {};
 var alphabet = "abcdefghijklmnopqrtstuvwxyz0123456789.-"
 var loggedIn = false;
 var userid = 0;
 var movieobj = {};
 var name = "";
-var localRecommendations = {};
+var page = 0;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //Functions to genrate recommended movies based on favorited movies
@@ -56,17 +51,43 @@ var setRecomObject = function(movieid) {
             for (var i = 0; i < data.results.length; i++) {
                 var tempid = data.results[i].id
                 recommends.push(tempid)
-            }    
-            if (loggedIn == true) {
-                var update = {};
-                update[userid+"/recommendations/" + tmdbID] = recommends;
-                database.ref("/users").update(update);
-            } else {
-                localRecommendations[tmdbID] = recommends;
-            }        
+            } 
+            getIMDBids(tmdbID, recommends)
+
+                
         });
     })
 }
+
+//Uses a TMDB API to convert the TMDB movie ids into IMDB movie ids
+var getIMDBids = function(ID, array) {
+    var promises = array.map((id) => {
+        return new Promise(function(res) { 
+            var idurl = "https://api.themoviedb.org/3/movie/" + id + " ?api_key="+tmdb_key+"&language=en-US"
+            var imdbID = "";
+            $.ajax({
+                url: idurl,
+                method: "GET"
+            }).then(function(data) {
+                imdbID = data.imdb_id;
+                res(imdbID)
+            });
+        })
+    })
+    Promise.all(promises).then(function(alldata) {
+        var temp = alldata;
+        var movies = temp.filter(movie=> favmovies.indexOf(movie) < 0);   
+        
+        if (loggedIn == true) {
+            var update = {};
+            update[userid+"/recommendations/" + ID] = movies;
+            database.ref("/users").update(update);
+        } else {
+            localRecommendations[ID] = movies;
+        }    
+    })
+} 
+
 
 var removeFavorite = function(movieid) {
     var IDurl = "https://api.themoviedb.org/3/find/" + String(movieid) + "?api_key="+tmdb_key+"&language=en-US&external_source=imdb_id"
@@ -117,15 +138,17 @@ var sortObj = function(myobject) {
         for (var j = 0; j < myobject[objKeys[i]].length; j++) {
             var movie = myobject[objKeys[i]][j];
             
-            if (ratedMovies.indexOf(movie) < 0 && favtmdb.indexOf(movie) < 0 ) {
+            if (ratedMovies.indexOf(movie) < 0 && favmovies.indexOf(movie) < 0 ) {
                 var rating = getRated(myobject,movie);
                 ratedMovies.push(movie);
                 ratedObj[movie] = rating;
             }
         }
     }
-    sortRatings(ratedObj);
-    getIMDBids(recommendArray)
+    var recommendArray = sortRatings(ratedObj);
+    recommendations = [];
+    recommendations = recommendArray;
+    getResults(recommendations);
 }
 
 //This function gives a rating by counting the number of times the movie appears in each list
@@ -143,7 +166,7 @@ var getRated = function(movieObj, movie) {
 //Sorts the rated movie object from highest rated movie to lowest and pushes them into and array
 var sortRatings = function(myobject) {
     var sortable = [];
-    recommendArray = [];
+    var recommendArray = [];
     for (var id in myobject) {
         sortable.push([id, myobject[id]]);
     }
@@ -154,36 +177,7 @@ var sortRatings = function(myobject) {
     for (var i = 0;  i< sortable.length;i++){
         recommendArray.push(sortable[i][0])
     }
-}
-
-
-//Uses a TMDB API to convert the TMDB movie ids into IMDB movie ids
-var getIMDBids = function(array) {
-    if (array.length >=100) {
-        var movies = array.slice(0,99);
-    } else {
-        var movies = array;
-    }
-    
-    recommendations = [];
-    var promises = movies.map((id) => {
-        return new Promise(function(res) { 
-            var idurl = "https://api.themoviedb.org/3/movie/" + id + " ?api_key="+tmdb_key+"&language=en-US"
-            var imdbID = "";
-            $.ajax({
-                url: idurl,
-                method: "GET"
-            }).then(function(data) {
-                imdbID = data.imdb_id;
-                res(imdbID)
-            });
-        })
-    })
-    Promise.all(promises).then(function(alldata) {
-        var temp = alldata;
-        recommendations = temp.filter(movie=> favmovies.indexOf(movie) < 0);     
-        getResults(recommendations);
-    })
+    return recommendArray;
 }
 
 //Using the IMDB movie titles to call the OMDB API to pull data objects on each movie
@@ -621,6 +615,7 @@ var makevid = function(id) {
 
 //Upon sucessful account creation using the Firebase function, modal is closed and user datebase is created using current favorite movies.
 var createSucess = function(user) {
+    $("body").removeClass("modal-open")
     $("#signUpModal").css("display", "none");
     $("#signInModal").css("display", "none");
     $(".modal-backdrop")[0].remove();
@@ -635,6 +630,10 @@ var createSucess = function(user) {
 
 //Upon Successful account login using the Firebase function, modal is closed and cleared, and favorite movies are retrieved from the database.
 var loginSuccess = function(user) {
+    $("body").removeClass("modal-open")
+    $("#signInModal").css("display", "none");
+    $("#signUpModal").css("display", "none");
+    $(".modal-backdrop")[0].remove();
     $("#email").val("")
     $("#password").val("")
     $("#email").val("")
@@ -644,9 +643,6 @@ var loginSuccess = function(user) {
     $("#seachbtns").attr("style","display:none")
     $("#seachbtns-bottom").attr("style","display:none")
     $("#search-title").text("Search Results");
-    $("body").removeClass("modal-open")
-    $("#signInModal").css("display", "none");
-    $(".modal-backdrop")[0].remove();
     userid = user.user.uid;
     loggedIn = true;
     database.ref("/users").once("value").then(function(data) {
@@ -658,11 +654,12 @@ var loginSuccess = function(user) {
 }
 //////////////////////////////////////////////////////////////////////
 
-
+//calls allusers objects from database
 database.ref("/users").on("value", function(data) {
     allUsers = Object.values(data.val());
 })
 
+//ensure name meets certain criteria
 var nameCheck = function(name) {
     var isCorrect = true;
     for (var i = 0; i < name.length; i++) {
@@ -679,6 +676,7 @@ var nameCheck = function(name) {
     return isCorrect;
 }
 
+//ensurea email for user registration is unique
 var checkEmail = function(email) {
     var allEmail = [];
     var isUnique = true;
@@ -697,10 +695,10 @@ $(document).ready(function() {
     //logs out any signed in user when page is first loaded
     auth.signOut();
    
+    //search button in nav bar
     $("#submit").on("click", function(event){
         event.preventDefault();
         $("#movieSection").empty()
-        $("#recommendSection").empty();
         $("#seachbtns").attr("style","display:block")
         $("#seachbtns-bottom").attr("style","display:block")
         var movie = $("#search-movie").val();
@@ -710,12 +708,12 @@ $(document).ready(function() {
         searchMovie(movie);
     })
 
+    //Recommendations tab
     $("#recommendations").on("click", function(event){
         event.preventDefault();
         if( favmovies.length > 0) {
             $("#movieSection").empty()
             $("#recommendation-info").empty();
-            $("#recommendSection").empty();
             $("#favorites-info").empty()
             $("#seachbtns-recom").attr("style","display:block")
             $("#seachbtns-bottom-recom").attr("style","display:block")
@@ -726,11 +724,11 @@ $(document).ready(function() {
         }
     })
 
+    //favorites tab
     $("#favorites").on("click", function(event){
         event.preventDefault();
         $("#movieSection").empty()
         $("#recommendation-info").empty();
-        $("#recommendSection").empty();
         $("#favorites-info").empty()
         $("#seachbtns-fav").attr("style","display:block")
         $("#seachbtns-bottom-fav").attr("style","display:block")
@@ -740,7 +738,8 @@ $(document).ready(function() {
         getFavorites(favmovies);
     })
 
-    $("#nextPage").on("click", function(event){
+    //Multiple functions to turn pages based on which tab you are looking at.
+    $("#nextPage, #nextPage-fav, #nextPage-recom").on("click", function(event){
         event.preventDefault();
         if (searchType == "search") {
             if (page <= searchResults.length-10) {
@@ -763,7 +762,7 @@ $(document).ready(function() {
         }
     })
 
-    $("#prevPage").on("click", function(event){
+    $("#prevPage, #prevPage-fav, #prevPage-recom").on("click", function(event){
         event.preventDefault();
         if (searchType == "search") {
             if ( page >= 10 ) {
@@ -786,7 +785,7 @@ $(document).ready(function() {
         }
     })
 
-    $("#nextPage-bottom").on("click", function(event){
+    $("#nextPage-bottom, #nextPage-bottom-fav, #nextPage-bottom-recom").on("click", function(event){
         event.preventDefault();
         if (searchType == "search") {
             if (page < searchResults.length-10) {
@@ -809,7 +808,7 @@ $(document).ready(function() {
         }
     })
 
-    $("#prevPage-bottom").on("click", function(event){
+    $("#prevPage-bottom, #prevPage-bottom-fav, #prevPage-bottom-recom").on("click", function(event){
         event.preventDefault();
         if (searchType == "search") {
             if ( page >= 10 ) {
@@ -831,193 +830,8 @@ $(document).ready(function() {
             }
         }
     })
+    //////////////////////////////////////////////////////////////
 
-    $("#nextPage-fav").on("click", function(event){
-        event.preventDefault();
-        if (searchType == "search") {
-            if (page < searchResults.length-10) {
-                page += 10;
-                $("#movieSection").empty();
-                turnPage(searchResults);
-            }
-        } else if (searchType == "recommend") {
-            if (page < recommendations.length-10 && page >= 0) {
-                page += 10;
-                $("#recommendation-info").empty();
-                turnPage(recommendations);
-            }
-        } else if (searchType == "favorites") {
-            if (page < favmovies.length-10) {
-                page += 10;
-                $("#favorites-info").empty()
-                turnPage(favmovies);
-            }
-        }
-    })
-
-    $("#prevPage-fav").on("click", function(event){
-        event.preventDefault();
-        if (searchType == "search") {
-            if ( page >= 10 ) {
-                page -= 10;
-                $("#movieSection").empty();
-                turnPage(searchResults);
-            }
-        } else if (searchType == "recommend") {
-            if (page <= recommendations.length && page >= 10 ) {
-                page -= 10;
-                $("#recommendation-info").empty();
-                turnPage(recommendations);
-            }
-        } else if (searchType == "favorites") {
-            if (page <= favmovies.length && page >= 10 ) {
-                page -= 10;
-                $("#favorites-info").empty()
-                turnPage(favmovies);
-            }
-        }
-    })
-
-    $("#nextPage-bottom-fav").on("click", function(event){
-        event.preventDefault();
-        if (searchType == "search") {
-            if (page < searchResults.length-10) {
-                page += 10;
-                $("#movieSection").empty();
-                turnPage(searchResults);
-            }
-        } else if (searchType == "recommend") {
-            if (page < recommendations.length-10 && page >= 0) {
-                page += 10;
-                $("#recommendation-info").empty();
-                turnPage(recommendations);
-            }
-        } else if (searchType == "favorites") {
-            if (page < favmovies.length-10) {
-                page += 10;
-                $("#favorites-info").empty()
-                turnPage(favmovies);
-            }
-        }
-    })
-
-    $("#prevPage-bottom-fav").on("click", function(event){
-        event.preventDefault();
-        if (searchType == "search") {
-            if ( page >= 10 ) {
-                page -= 10;
-                $("#movieSection").empty();
-                turnPage(searchResults);
-            }
-        } else if (searchType == "recommend") {
-            if (page < recommendations.length && page >= 10 ) {
-                page -= 10;
-                $("#recommendation-info").empty();
-                turnPage(recommendations);
-            }
-        } else if (searchType == "favorites") {
-            if (page <= favmovies.length && page >= 10 ) {
-                page -= 10;
-                $("#favorites-info").empty()
-                turnPage(favmovies);
-            }
-        }
-    })
-
-    
-    $("#nextPage-recom").on("click", function(event){
-        event.preventDefault();
-        if (searchType == "search") {
-            if (page < searchResults.length-10) {
-                page += 10;
-                $("#movieSection").empty();
-                turnPage(searchResults);
-            }
-        } else if (searchType == "recommend") {
-            if (page < recommendations.length-10 && page >= 0) {
-                page += 10;
-                $("#recommendation-info").empty();
-                turnPage(recommendations);
-            }
-        } else if (searchType == "favorites") {
-            if (page < favmovies.length-10) {
-                page += 10;
-                $("#favorites-info").empty()
-                turnPage(favmovies);
-            }
-        }
-    })
-
-    $("#prevPage-recom").on("click", function(event){
-        event.preventDefault();
-        if (searchType == "search") {
-            if ( page >= 10 ) {
-                page -= 10;
-                $("#movieSection").empty();
-                turnPage(searchResults);
-            }
-        } else if (searchType == "recommend") {
-            if (page < recommendations.length && page >= 10 ) {
-                page -= 10;
-                $("#recommendation-info").empty();
-                turnPage(recommendations);
-            }
-        } else if (searchType == "favorites") {
-            if (page <= favmovies.length && page >= 10 ) {
-                page -= 10;
-                $("#favorites-info").empty()
-                turnPage(favmovies);
-            }
-        }
-    })
-
-    $("#nextPage-bottom-recom").on("click", function(event){
-        event.preventDefault();
-        if (searchType == "search") {
-            if (page < searchResults.length-10) {
-                page += 10;
-                $("#movieSection").empty();
-                turnPage(searchResults);
-            }
-        } else if (searchType == "recommend") {
-            if (page < recommendations.length-10 && page >= 0) {
-                page += 10;
-                $("#recommendation-info").empty();
-                turnPage(recommendations);
-            }
-        } else if (searchType == "favorites") {
-            if (page < favmovies.length-10) {
-                page += 10;
-                $("#favorites-info").empty()
-                turnPage(favmovies);
-            }
-        }
-    })
-
-    $("#prevPage-bottom-recom").on("click", function(event){
-        event.preventDefault();
-        if (searchType == "search") {
-            if ( page >= 10 ) {
-                page -= 10;
-                $("#movieSection").empty();
-                turnPage(searchResults);
-            }
-        } else if (searchType == "recommend") {
-            if (page < recommendations.length && page >= 10 ) {
-                page -= 10;
-                $("#recommendation-info").empty();
-                turnPage(recommendations);
-            }
-        } else if (searchType == "favorites") {
-            if (page <= favmovies.length && page >= 10 ) {
-                page -= 10;
-                $("#favorites-info").empty()
-                turnPage(favmovies);
-            }
-        }
-    })
-
-    
     /*Tab Navigation*/
     $(".nav-link").click( function() {
         $(".nav-link").removeClass("active");
@@ -1029,6 +843,7 @@ $(document).ready(function() {
     })
     /*End of Tab Navigation  */
 
+    //Closes Trailer Modal
     $("#x").on("click", function () {
         var modal = $("#trailerModal");
         modal.attr("style", "display: none")
@@ -1039,7 +854,7 @@ $(document).ready(function() {
         $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
     });
 
-
+    //Completes new user registration
     $( "#register" ).on( "click", function() {
         event.preventDefault();
         name = $("#name4").val().trim();
@@ -1048,7 +863,7 @@ $(document).ready(function() {
         var condition = nameCheck(name);
         var condition2 = checkEmail(email);
         if (condition == true && condition2 == true) {
-            firebase.auth().createUserWithEmailAndPassword(email, password)
+            auth.createUserWithEmailAndPassword(email, password)
             .then(user => createSucess(user))
             .catch(function(error) {
             var errorCode = error.code;
@@ -1061,7 +876,7 @@ $(document).ready(function() {
         }
     });
 
-    
+    //Completes new user registration
     $( "#register2" ).on( "click", function() {
         event.preventDefault();
         name = $("#name2").val().trim();
@@ -1070,7 +885,7 @@ $(document).ready(function() {
         var condition = nameCheck(name);
         var condition2 = checkEmail(email);
         if (condition == true && condition2 == true) {
-            firebase.auth().createUserWithEmailAndPassword(email, password)
+            auth.createUserWithEmailAndPassword(email, password)
             .then(user => createSucess(user))
             .catch(function(error) {
             var errorCode = error.code;
@@ -1083,7 +898,7 @@ $(document).ready(function() {
         }
     });
 
-
+    //Completes user login
     $("#sign-in").on( "click", function() {
         event.preventDefault();
         $("#loginButton").hide();
@@ -1091,7 +906,7 @@ $(document).ready(function() {
         $("#logoutButton").attr('style','display: block');
         var email = $("#email").val().trim();
         var password = $("#password").val().trim();
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .then(user => loginSuccess(user))
             .catch(function(error) {
                 var errorCode = error.code;
@@ -1100,6 +915,8 @@ $(document).ready(function() {
                 $("#password").val("")
             });
     });
+
+    //Completes user login
     $("#sign-in2").on( "click", function() {
         event.preventDefault();
         $("#loginButton").hide();
@@ -1107,7 +924,7 @@ $(document).ready(function() {
         $("#logoutButton").attr('style','display: block');
         var email = $("#email1").val().trim();
         var password = $("#password1").val().trim();
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .then(user => loginSuccess(user))
             .catch(function(error) {
                 var errorCode = error.code;
@@ -1117,22 +934,21 @@ $(document).ready(function() {
                 });
         });
 
+        //Completes user logout
         $("#logoutButton").on("click", function(){
-        firebase.auth().signOut().then(function() {
+            auth.signOut().then(function() {
             // Sign- 
             $("#loginButton").show();
-        $("#signupButton").show();
-        $("#logoutButton").attr('style','display: none');
+            $("#signupButton").show();
+            $("#logoutButton").attr('style','display: none');
+            $("#recommendation-info").empty();
+            $("#favorites-info").empty()
+            favmovies  = [];
+            loggedIn = false;
+            localRecommendations = [];
         }, function(error) {
             // An error happened.
         });
     })
 
-    $("#signout").on("click", function(){
-        firebase.auth().signOut().then(function() {
-            // Sign-out successful.
-        }, function(error) {
-            // An error happened.
-        });
-        })
-    });
+});
