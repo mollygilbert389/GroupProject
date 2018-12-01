@@ -57,7 +57,6 @@ var setRecomObject = function(movieid) {
                 var tempid = data.results[i].id
                 recommends.push(tempid)
             }    
-            console.log(tmdbID, recommends)
             if (loggedIn == true) {
                 var update = {};
                 update[userid+"/recommendations/" + tmdbID] = recommends;
@@ -260,7 +259,6 @@ var createRecomCards = function(data) {
             update[userid+"/favorites"] = favmovies;
             database.ref("/users").update(update);
         }
-        
     })
     trailerIMG = $("<img>").attr("src", "assets/images/trailer.png");
     trailerIMG.attr("id-holder", id);
@@ -536,6 +534,7 @@ var turnPage = function(movies) {
     if (page <= movies.length && page >= 0) {
        var array = movies;
         if (movies.length - page < 10){
+            console.log("half page")
             for (var i = page; i < array.length; i++) {
                 var movieid = array[i]
                 if (movieid != null && movieid.length > 0) {
@@ -554,8 +553,9 @@ var turnPage = function(movies) {
                     });
                 }
             }  
-        } else {
-            for (var i = page; i < page+10; i++) {
+        } else if (movies.length - page > 0 ) {
+            console.log("full page")
+            for (var i = page; i < page+9; i++) {
                 var movieid = array[i]
                 if (movieid != null && movieid.length > 0) {
                     var movieurl = "https://www.omdbapi.com/?i=" + movieid + "&y=&plot=short&apikey="+omdb_key
@@ -717,8 +717,8 @@ $(document).ready(function() {
             $("#recommendation-info").empty();
             $("#recommendSection").empty();
             $("#favorites-info").empty()
-            $("#seachbtns").attr("style","display:block")
-            $("#seachbtns-bottom").attr("style","display:block")
+            $("#seachbtns-recom").attr("style","display:block")
+            $("#seachbtns-bottom-recom").attr("style","display:block")
             $("#search-title").text("Recommendations")
             searchType = "recommend";
             page=0;
@@ -732,33 +732,32 @@ $(document).ready(function() {
         $("#recommendation-info").empty();
         $("#recommendSection").empty();
         $("#favorites-info").empty()
-        $("#seachbtns").attr("style","display:block")
-        $("#seachbtns-bottom").attr("style","display:block")
+        $("#seachbtns-fav").attr("style","display:block")
+        $("#seachbtns-bottom-fav").attr("style","display:block")
         $("#search-title").text("Favorites")
         searchType = "favorites";
         page=0;
         getFavorites(favmovies);
     })
 
-
     $("#nextPage").on("click", function(event){
         event.preventDefault();
         if (searchType == "search") {
-            if (page <= searchResults.length-9) {
+            if (page <= searchResults.length-10) {
                 page += 10;
                 $("#movieSection").empty();
                 turnPage(searchResults);
             }
         } else if (searchType == "recommend") {
-            if (page <= recommendations.length-9 && page >= 0) {
+            if (page < recommendations.length-10 && page >= 0) {
                 page += 10;
-                $("#movieSection").empty();
+                $("#recommendation-info").empty();
                 turnPage(recommendations);
             }
         } else if (searchType == "favorites") {
-            if (page <= favmovies.length-9) {
+            if (page < favmovies.length-10) {
                 page += 10;
-                $("#movieSection").empty();
+                $("#favorites-info").empty()
                 turnPage(favmovies);
             }
         }
@@ -775,13 +774,13 @@ $(document).ready(function() {
         } else if (searchType == "recommend") {
             if (page <= recommendations.length && page >= 10 ) {
                 page -= 10;
-                $("#movieSection").empty();
+                $("#recommendation-info").empty();
                 turnPage(recommendations);
             }
         } else if (searchType == "favorites") {
             if (page <= favmovies.length && page >= 10 ) {
                 page -= 10;
-                $("#movieSection").empty();
+                $("#favorites-info").empty()
                 turnPage(favmovies);
             }
         }
@@ -790,21 +789,21 @@ $(document).ready(function() {
     $("#nextPage-bottom").on("click", function(event){
         event.preventDefault();
         if (searchType == "search") {
-            if (page <= searchResults.length-9) {
+            if (page < searchResults.length-10) {
                 page += 10;
                 $("#movieSection").empty();
                 turnPage(searchResults);
             }
         } else if (searchType == "recommend") {
-            if (page <= recommendations.length-9 && page >= 0) {
+            if (page < recommendations.length-10 && page >= 0) {
                 page += 10;
-                $("#movieSection").empty();
+                $("#recommendation-info").empty();
                 turnPage(recommendations);
             }
         } else if (searchType == "favorites") {
-            if (page <= favmovies.length-9) {
+            if (page < favmovies.length-10) {
                 page += 10;
-                $("#movieSection").empty();
+                $("#favorites-info").empty()
                 turnPage(favmovies);
             }
         }
@@ -821,17 +820,204 @@ $(document).ready(function() {
         } else if (searchType == "recommend") {
             if (page <= recommendations.length && page >= 10 ) {
                 page -= 10;
-                $("#movieSection").empty();
+                $("#recommendation-info").empty();
                 turnPage(recommendations);
             }
         } else if (searchType == "favorites") {
             if (page <= favmovies.length && page >= 10 ) {
                 page -= 10;
-                $("#movieSection").empty();
+                $("#favorites-info").empty()
                 turnPage(favmovies);
             }
         }
     })
+
+    $("#nextPage-fav").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if (page < searchResults.length-10) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page < recommendations.length-10 && page >= 0) {
+                page += 10;
+                $("#recommendation-info").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page < favmovies.length-10) {
+                page += 10;
+                $("#favorites-info").empty()
+                turnPage(favmovies);
+            }
+        }
+    })
+
+    $("#prevPage-fav").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if ( page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page <= recommendations.length && page >= 10 ) {
+                page -= 10;
+                $("#recommendation-info").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page <= favmovies.length && page >= 10 ) {
+                page -= 10;
+                $("#favorites-info").empty()
+                turnPage(favmovies);
+            }
+        }
+    })
+
+    $("#nextPage-bottom-fav").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if (page < searchResults.length-10) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page < recommendations.length-10 && page >= 0) {
+                page += 10;
+                $("#recommendation-info").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page < favmovies.length-10) {
+                page += 10;
+                $("#favorites-info").empty()
+                turnPage(favmovies);
+            }
+        }
+    })
+
+    $("#prevPage-bottom-fav").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if ( page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page < recommendations.length && page >= 10 ) {
+                page -= 10;
+                $("#recommendation-info").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page <= favmovies.length && page >= 10 ) {
+                page -= 10;
+                $("#favorites-info").empty()
+                turnPage(favmovies);
+            }
+        }
+    })
+
+    
+    $("#nextPage-recom").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if (page < searchResults.length-10) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page < recommendations.length-10 && page >= 0) {
+                page += 10;
+                $("#recommendation-info").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page < favmovies.length-10) {
+                page += 10;
+                $("#favorites-info").empty()
+                turnPage(favmovies);
+            }
+        }
+    })
+
+    $("#prevPage-recom").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if ( page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page < recommendations.length && page >= 10 ) {
+                page -= 10;
+                $("#recommendation-info").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page <= favmovies.length && page >= 10 ) {
+                page -= 10;
+                $("#favorites-info").empty()
+                turnPage(favmovies);
+            }
+        }
+    })
+
+    $("#nextPage-bottom-recom").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if (page < searchResults.length-10) {
+                page += 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page < recommendations.length-10 && page >= 0) {
+                page += 10;
+                $("#recommendation-info").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page < favmovies.length-10) {
+                page += 10;
+                $("#favorites-info").empty()
+                turnPage(favmovies);
+            }
+        }
+    })
+
+    $("#prevPage-bottom-recom").on("click", function(event){
+        event.preventDefault();
+        if (searchType == "search") {
+            if ( page >= 10 ) {
+                page -= 10;
+                $("#movieSection").empty();
+                turnPage(searchResults);
+            }
+        } else if (searchType == "recommend") {
+            if (page < recommendations.length && page >= 10 ) {
+                page -= 10;
+                $("#recommendation-info").empty();
+                turnPage(recommendations);
+            }
+        } else if (searchType == "favorites") {
+            if (page <= favmovies.length && page >= 10 ) {
+                page -= 10;
+                $("#favorites-info").empty()
+                turnPage(favmovies);
+            }
+        }
+    })
+
+    
     /*Tab Navigation*/
     $(".nav-link").click( function() {
         $(".nav-link").removeClass("active");
